@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const Navbar = ({ fixed }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   return (
@@ -7,10 +6,7 @@ const Navbar = ({ fixed }) => {
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-gray-300 mb-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
-              className="text-sm font-bold leading-relaxed inline-block mr-3 py-2 whitespace-no-wrap uppercase text-black"
-              href="#pablo"
-            >
+            <a className="text-sm font-bold leading-relaxed inline-block mr-3 py-2 whitespace-no-wrap uppercase text-black">
               가제
             </a>
             <div className="relative flex flex-row-reverse">
