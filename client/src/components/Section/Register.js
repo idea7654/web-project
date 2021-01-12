@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
-const Login = ({ history }) => {
+const Register = () => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -13,18 +12,14 @@ const Login = ({ history }) => {
     setPassword(e.target.value);
   };
 
-  const registerRoute = () => {
-    history.push("/register");
-  };
-
   const handleSubmit = () => {
     let body = {
       id: Id,
       password: Password,
     };
 
-    axios.post("http://localhost:8000/api/login", body).then((res) => {
-      console.log("로그인요청 응답완료");
+    axios.post("http://localhost:8000/api/register", body).then((res) => {
+      console.log("회원가입요청");
     });
   };
   return (
@@ -34,7 +29,7 @@ const Login = ({ history }) => {
           <form className="bg-white rounded px-12 pt-6 pb-8 mb-4">
             {/* <!-- @csrf --> */}
             <div className="text-gray-800 text-2xl flex justify-center border-b-2 py-2 mb-4">
-              Login
+              Register
             </div>
             <div className="mb-4">
               <label
@@ -72,19 +67,13 @@ const Login = ({ history }) => {
                 onChange={changePassword}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <a
-                className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-                onClick={registerRoute}
-              >
-                SignUp
-              </a>
+            <div className="flex items-center justify-end">
               <button
                 className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
                 type="submit"
                 onClick={handleSubmit}
               >
-                SignIn
+                SignUp
               </button>
             </div>
           </form>
@@ -94,4 +83,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default withRouter(Login);
+export default Register;

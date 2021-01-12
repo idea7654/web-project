@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Landing from "./components/Section/Landing";
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Section/Login";
+import Register from "./components/Section/Register";
+import { withRouter, Route } from "react-router-dom";
 const App = () => {
   const [Title, setTitle] = useState("");
   // useEffect(() => {
@@ -15,11 +17,12 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      {/* <Landing /> */}
-      <Login />
+      <Route path="/" component={Landing} exact />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
       <Footer />
     </div>
   );
 };
 
-export default App;
+export default withRouter(App);
