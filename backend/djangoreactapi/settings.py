@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'post',
     'rest_framework',
     'corsheaders', 
+    'knox',
+    'api',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
 MIDDLEWARE = [
