@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const Register = () => {
+const Register = ({history}) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -19,7 +19,8 @@ const Register = () => {
       password: Password,
     };
     axios.post("http://localhost:8000/api/auth/register/", body).then((res) => {
-      console.log("회원가입했어요");
+      console.log(res);
+      history.push('/');
     });
   };
   return (

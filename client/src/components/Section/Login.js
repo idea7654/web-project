@@ -25,6 +25,7 @@ const Login = ({ history }) => {
 
     axios.post("http://localhost:8000/api/auth/login/", body).then((res) => {
       console.log(res);
+      history.push('/');
     });
   };
   return (
@@ -72,22 +73,23 @@ const Login = ({ history }) => {
                 onChange={changePassword}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <a
-                className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-                onClick={registerRoute}
-              >
-                SignUp
-              </a>
-              <button
-                className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                SignIn
-              </button>
-            </div>
+
           </form>
+          <div className="flex items-center justify-between">
+            <a
+              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
+              onClick={registerRoute}
+            >
+              SignUp
+            </a>
+            <button
+              className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              SignIn
+            </button>
+          </div>
         </div>
       </div>
     </div>
