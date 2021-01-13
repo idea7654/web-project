@@ -23,10 +23,15 @@ const Login = ({ history }) => {
       password: Password,
     };
 
-    axios.post("http://localhost:8000/api/auth/login/", body).then((res) => {
-      console.log(res);
-      history.push('/');
-    });
+    axios
+      .post("http://localhost:8000/api/auth/login/", body)
+      .then((res) => {
+        console.log(res);
+        history.push("/");
+      })
+      .catch((err) => {
+        alert("없는 유저입니다!");
+      });
   };
   return (
     <div className="h-screen flex justify-center">
@@ -73,7 +78,6 @@ const Login = ({ history }) => {
                 onChange={changePassword}
               />
             </div>
-
           </form>
           <div className="flex items-center justify-between">
             <a
