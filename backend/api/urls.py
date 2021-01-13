@@ -22,6 +22,6 @@ urlpatterns = [
 
     path('auth/login/', LoginAPI.as_view()), 
     path('auth/register/', RegistrationAPI.as_view()), 
-    path("auth/user/", UserAPI.as_view()),
+    path('auth/user/', UserAPI.as_view()),
 
 ]

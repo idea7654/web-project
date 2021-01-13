@@ -6,12 +6,12 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/Section/Login";
 import Register from "./components/Section/Register";
 import { withRouter, Route } from "react-router-dom";
+//import axios from "axios";
 const App = () => {
-  const [Title, setTitle] = useState("");
+  // const [Title, setTitle] = useState("");
   // useEffect(() => {
-  //   axios.get("http://localhost:8000/api").then((res) => {
-  //     //console.log(res);
-  //     setTitle(res.data[0].title);
+  //   axios.get("http://localhost:8000/api/").then((res) => {
+  //     console.log(res);
   //   });
   // }, []);
   return (
