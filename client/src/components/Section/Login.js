@@ -24,11 +24,7 @@ const Login = ({ history }) => {
     };
 
     axios.post("http://localhost:8000/api/auth/login/", body).then((res) => {
-<<<<<<< HEAD
-      console.log("로그인요청 응답완료");
-=======
       console.log(res);
->>>>>>> a95f4e961889cd79c3c7886ff2da23da1e15724b
     });
   };
   return (
