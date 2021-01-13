@@ -19,15 +19,11 @@ const Login = ({ history }) => {
 
   const handleSubmit = () => {
     let body = {
-      id: Id,
+      username: Id,
       password: Password,
     };
 
-<<<<<<< HEAD
     axios.post("http://localhost:8000/api/auth/login/", body).then((res) => {
-=======
-    axios.post("http://localhost:8000/api/login", body).then((res) => {
->>>>>>> b3f055e0f88fda346a8cf8c99bc8b0eefcdfecb1
       console.log("로그인요청 응답완료");
     });
   };

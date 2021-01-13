@@ -14,19 +14,10 @@ const Register = () => {
 
   const handleSubmit = () => {
     let body = {
-      id: Id,
+      username: Id,
       password: Password,
     };
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     axios.post("http://localhost:8000/api/auth/register/", body).then((res) => {
-=======
-    axios.post("http://localhost:8000/api/register", body).then((res) => {
->>>>>>> b3f055e0f88fda346a8cf8c99bc8b0eefcdfecb1
-=======
-    axios.post("http://localhost:8000/api/register", body).then((res) => {
->>>>>>> b3f055e0f88fda346a8cf8c99bc8b0eefcdfecb1
       console.log("회원가입요청");
     });
   };
