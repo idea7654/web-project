@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
-const Detail = () => {
+import axios from "axios";
+const Detail = ({ match }) => {
+  const [Info, setInfo] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/posts/${match.params.id}`)
+      .then((res) => {
+        console.log(res.data);
+        setInfo(res.data);
+      });
+  }, []);
   const star = (
     <svg
       fill="currentColor"
@@ -42,7 +52,7 @@ const Detail = () => {
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <div className="flex justify-between">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                상품 이름
+                {Info.pname}
               </h1>
               <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-3 transition duration-300 ease-in-out hover:bg-blue-600">
                 Ar Start
@@ -58,11 +68,11 @@ const Detail = () => {
                 <span className="text-gray-600 ml-3">리뷰개수</span>
               </span>
             </div>
-            <p className="leading-relaxed">상품설명</p>
+            <p className="leading-relaxed">{Info.content}</p>
           </div>
         </div>
       </div>
-      <Comment />
+      <Comment info={Info} />
     </div>
   );
 };

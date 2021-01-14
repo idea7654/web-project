@@ -1,5 +1,5 @@
 import React from "react";
-const Comment = () => {
+const Comment = ({ info }) => {
   const emptyStar = (
     <svg
       fill="none"
