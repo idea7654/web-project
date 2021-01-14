@@ -1,6 +1,10 @@
 import React from "react";
-
-const Product = () => {
+import { withRouter } from "react-router-dom";
+const Product = ({ history }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    history.push("/detail");
+  };
   return (
     <div className="container my-12 mx-auto px-4 md:px-12">
       <div className="flex flex-wrap -mx-1 lg:-mx-4">
@@ -8,7 +12,7 @@ const Product = () => {
         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
           {/* <!-- Article --> */}
           <article className="overflow-hidden rounded-lg shadow-lg">
-            <a href="#">
+            <a onClick={handleClick}>
               <img
                 alt="Placeholder"
                 className="block h-auto w-full"
@@ -30,7 +34,7 @@ const Product = () => {
         <div className="mt-6 my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
           {/* <!-- Article --> */}
           <article className="overflow-hidden rounded-lg shadow-lg">
-            <a href="#">
+            <a onClick={handleClick}>
               <img
                 alt="Placeholder"
                 className="block h-auto w-full"
@@ -51,7 +55,7 @@ const Product = () => {
         <div className="mt-6 my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
           {/* <!-- Article --> */}
           <article className="overflow-hidden rounded-lg shadow-lg">
-            <a href="#">
+            <a onClick={handleClick}>
               <img
                 alt="Placeholder"
                 className="block h-auto w-full"
@@ -74,4 +78,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default withRouter(Product);

@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/Section/Login";
 import Register from "./components/Section/Register";
 import { withRouter, Route } from "react-router-dom";
+import Detail from "./components/Section/Detail";
 //import axios from "axios";
 const App = () => {
   // const [Title, setTitle] = useState("");
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/" component={Landing} exact />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/detail" component={Detail} />
       <Footer />
     </div>
   );
