@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-const Login = ({ history }) => {
+const Login = ({ history, setUser }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -27,6 +27,7 @@ const Login = ({ history }) => {
       .post("http://localhost:8000/api/auth/login/", body)
       .then((res) => {
         console.log(res);
+        setUser(res.data);
         history.push("/");
       })
       .catch((err) => {

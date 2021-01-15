@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const Register = ({history}) => {
+const Register = ({ history, setUser }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -18,10 +18,16 @@ const Register = ({history}) => {
       username: Id,
       password: Password,
     };
-    axios.post("http://localhost:8000/api/auth/register/", body).then((res) => {
-      console.log(res);
-      history.push('/');
-    });
+    axios
+      .post("http://localhost:8000/api/auth/register/", body)
+      .then((res) => {
+        //console.log(res);
+        setUser(res.data);
+        history.push("/");
+      })
+      .catch((err) => {
+        alert("아이디 혹은 비밀번호의 조건이 맞지 않습니다.");
+      });
   };
   return (
     <div className="h-screen flex justify-center">
@@ -37,7 +43,7 @@ const Register = ({history}) => {
                 className="block text-gray-700 text-sm font-normal mb-2"
                 htmlFor="username"
               >
-                아이디
+                아이디(4자 이상)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -54,7 +60,7 @@ const Register = ({history}) => {
                 className="block text-gray-700 text-sm font-normal mb-2"
                 htmlFor="password"
               >
-                Password
+                Password(6자 이상)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"

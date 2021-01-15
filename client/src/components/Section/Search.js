@@ -1,10 +1,20 @@
-import React from "react";
-
-const Search = () => {
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
+const Search = ({ history }) => {
+  const [InputSearch, setInputSearch] = useState("");
+  const handleChange = (e) => {
+    setInputSearch(e.target.value);
+  };
+  const handleClick = () => {
+    history.push(`/list?search=${InputSearch}`);
+  };
   return (
     <div className="w-screen flex justify-center">
       <div className="mt-3 w-4/5 h-10 pl-3 pr-2 bg-white border rounded-full flex justify-between items-center relative">
         <input
+          value={InputSearch}
+          onChange={handleChange}
           type="search"
           name="search"
           id="search"
@@ -12,7 +22,8 @@ const Search = () => {
           className="appearance-none w-full outline-none focus:outline-none active:outline-none"
         />
         <button
-          type="submit"
+          onClick={handleClick}
+          type="button"
           className="ml-1 outline-none focus:outline-none active:outline-none"
         >
           <svg
@@ -32,4 +43,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default withRouter(Search);

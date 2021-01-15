@@ -1,17 +1,120 @@
-import React from "react";
-const Comment = ({ info }) => {
-  const emptyStar = (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      className="w-4 h-4 text-red-500"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-    </svg>
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+const Comment = ({ info, user }) => {
+  const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
+  const [Review, setReview] = useState(0);
+  const [Comment, setComment] = useState("");
+  const handleClick = (index) => {
+    setStar(
+      Star.map((data, i) => {
+        if (i < index) {
+          data = "currentColor";
+        } else {
+          data = "none";
+        }
+        return data;
+      })
+    );
+    setReview(index);
+  };
+  const handleChange = (e) => {
+    setComment(e.target.value);
+  };
+  const handlePost = () => {
+    let body = {
+      user: user.user.username,
+      comment: Comment,
+      star: Review,
+    };
+    console.log(body);
+    // axios
+    //   .post(`http://localhost:8000/api/${info.id}/comment`, body)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     alert("로그인이 필요합니다!");
+    //   });
+  };
+
+  const emptyStar1 = (
+    <div onClick={() => handleClick(1)}>
+      <svg
+        fill={Star[0]}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    </div>
+  );
+
+  const emptyStar2 = (
+    <div onClick={() => handleClick(2)}>
+      <svg
+        fill={Star[1]}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    </div>
+  );
+
+  const emptyStar3 = (
+    <div onClick={() => handleClick(3)}>
+      <svg
+        fill={Star[2]}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    </div>
+  );
+
+  const emptyStar4 = (
+    <div onClick={() => handleClick(4)}>
+      <svg
+        fill={Star[3]}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    </div>
+  );
+
+  const emptyStar5 = (
+    <div onClick={() => handleClick(5)}>
+      <svg
+        fill={Star[4]}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    </div>
   );
   return (
     <div>
@@ -85,16 +188,26 @@ const Comment = ({ info }) => {
             </h2>
             <div className="w-full md:w-full px-3 mb-2 mt-2">
               <textarea
+                value={Comment}
+                onChange={handleChange}
                 className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                 name="body"
                 placeholder="Type Your Comment"
                 required
               ></textarea>
             </div>
-            <div className="w-full md:w-full flex justify-end items-start md:w-full px-3">
+            <div className="w-full md:w-full flex justify-between items-start md:w-full px-3">
+              <div className="flex flex-row">
+                {emptyStar1}
+                {emptyStar2}
+                {emptyStar3}
+                {emptyStar4}
+                {emptyStar5}
+              </div>
               <div className="-mr-1">
                 <input
-                  type="submit"
+                  onClick={handlePost}
+                  type="button"
                   className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
                   value="등록하기"
                 />

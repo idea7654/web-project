@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import axios from "axios";
-const Detail = ({ match }) => {
-  const [Info, setInfo] = useState(null);
+const Detail = ({ user, match }) => {
+  const [Info, setInfo] = useState({
+    pname: "",
+    content: "",
+    id: "",
+  });
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
       .then((res) => {
-        console.log(res.data);
         setInfo(res.data);
       });
   }, []);
@@ -39,16 +42,20 @@ const Detail = ({ match }) => {
     </svg>
   );
 
+  const image = (
+    <img
+      alt="ecommerce"
+      className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+      src={process.env.PUBLIC_URL + "/109672.jpg"}
+    />
+  );
+
   //const comment =
   return (
     <div>
       <div className="container px-5 py-10 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img
-            alt="ecommerce"
-            className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-            src="109672.jpg"
-          />
+          {image}
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <div className="flex justify-between">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
@@ -72,7 +79,7 @@ const Detail = ({ match }) => {
           </div>
         </div>
       </div>
-      <Comment info={Info} />
+      <Comment info={Info} user={user} />
     </div>
   );
 };

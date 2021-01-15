@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-const Navbar = ({ history }) => {
+const Navbar = ({ history, User }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const mainRoute = () => {
@@ -8,7 +8,9 @@ const Navbar = ({ history }) => {
   };
 
   const loginRoute = () => {
-    history.push("/login");
+    if (!User.user) {
+      history.push("/login");
+    }
   };
 
   return (
