@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
+import Ar from "./Ar";
 import axios from "axios";
 const Detail = ({ user, match }) => {
   const [Info, setInfo] = useState({
@@ -61,9 +62,7 @@ const Detail = ({ user, match }) => {
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {Info.pname}
               </h1>
-              <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-3 transition duration-300 ease-in-out hover:bg-blue-600">
-                Ar Start
-              </a>
+              <Ar />
             </div>
             <div className="flex mb-4">
               <span className="flex items-center">
