@@ -14,4 +14,4 @@ class Post(models.Model):
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)        # 게시글 이미지매칭 키
-    image = models.ImageField(upload_to="post/%Y/%m/%d")            # 이미지
+    image = models.ImageField()            # 이미지
