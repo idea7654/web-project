@@ -31,7 +31,7 @@ const Navbar = ({ history, User }) => {
                 onClick={() => setNavbarOpen(!navbarOpen)}
               >
                 <i className="fas fa-bars"></i>
-                <img className="w-auto h-6" src="list.png" alt="menuBar" />
+                <img className="w-auto h-6" src="/list.png" alt="menuBar" />
               </button>
               <button
                 className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -39,7 +39,7 @@ const Navbar = ({ history, User }) => {
                 onClick={loginRoute}
               >
                 <i className="fas fa-bars"></i>
-                <img className="w-auto h-6" src="user.png" alt="login" />
+                <img className="w-auto h-6" src="/user.png" alt="login" />
               </button>
             </div>
           </div>

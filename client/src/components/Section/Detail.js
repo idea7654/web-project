@@ -47,7 +47,7 @@ const Detail = ({ user, match }) => {
     <img
       alt="ecommerce"
       className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-      src={process.env.PUBLIC_URL + "/109672.jpg"}
+      src="https://kwakk.s3.ap-northeast-2.amazonaws.com/media/public/3.PNG"
     />
   );
 
