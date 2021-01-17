@@ -20,8 +20,12 @@ class PostSerializer(serializers.ModelSerializer):
             'content',
             'star',
             'images',
+            'imgurl',
+            'cdate',
+            
+            
         )
-
+        
     def create(self, validated_data):
        images_data = self.context['request'].FILES
        post = Post.objects.create(**validated_data)

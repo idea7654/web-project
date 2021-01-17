@@ -26,7 +26,7 @@ SECRET_KEY = '^rl6o36-&pxbw+q-1t_m9@d6&nztrg1(decpj$z!2-#c^5)$3!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost','*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'storages',
     'post',
     'rest_framework',
     'corsheaders', 
@@ -142,3 +143,6 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
