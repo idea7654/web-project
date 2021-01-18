@@ -1,7 +1,18 @@
 import React from "react";
-
-const Category = ({ history }) => {
-  return <div></div>;
+import axios from "axios";
+import { withRouter, Route } from "react-router-dom";
+import CategoryList from "./CategoryList";
+import Categories from "./Categories";
+const Category = ({ history, match }) => {
+  return (
+    <div>
+      <Route exact path={match.path} render={() => <Categories />} />
+      <Route
+        path={`${match.path}/:id`}
+        render={({ match }) => <CategoryList match={match} />}
+      />
+    </div>
+  );
 };
 
-export default Category;
+export default withRouter(Category);

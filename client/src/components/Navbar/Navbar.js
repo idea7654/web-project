@@ -5,12 +5,19 @@ const Navbar = ({ history, User }) => {
 
   const mainRoute = () => {
     history.push("/");
+    setNavbarOpen(false);
   };
 
   const loginRoute = () => {
     if (!User.user) {
       history.push("/login");
+      setNavbarOpen(false);
     }
+  };
+
+  const categoryRoute = () => {
+    history.push("/category");
+    setNavbarOpen(false);
   };
 
   return (
@@ -54,7 +61,7 @@ const Navbar = ({ history, User }) => {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                  href="#pablo"
+                  onClick={categoryRoute}
                 >
                   <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
                   <span className="ml-2">카테고리</span>

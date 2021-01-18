@@ -7,47 +7,47 @@ const Detail = ({ user, match }) => {
     pname: "",
     content: "",
     id: "",
+    imgurl: "",
+    category: 0,
   });
-  useEffect(() => {
-    axios
+  const [Estar, setEstar] = useState([]);
+  const [Fstar, setFstar] = useState([]);
+  useEffect(async () => {
+    const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
       .then((res) => {
-        setInfo(res.data);
+        switch (res.data.category) {
+          case 1:
+            res.data.category = "의자";
+            break;
+          case 2:
+            res.data.category = "책상";
+            break;
+          case 3:
+            res.data.category = "서랍";
+            break;
+          case 4:
+            res.data.category = "소형수납";
+            break;
+          case 5:
+            res.data.category = "주방 부속품";
+            break;
+        }
+        return res;
       });
+    await setInfo(res.data);
+    const star = await Math.round(res.data.star);
+    await setFstar(star);
+    await setEstar(5 - star);
+    await console.log(Fstar, Estar);
   }, []);
-  const star = (
-    <svg
-      fill="currentColor"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      className="w-4 h-4 text-red-500"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-    </svg>
-  );
-
-  const emptyStar = (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      className="w-4 h-4 text-red-500"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-    </svg>
-  );
 
   const image = (
     <img
       alt="ecommerce"
       className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-      src="https://kwakk.s3.ap-northeast-2.amazonaws.com/media/public/3.PNG"
+      //src="https://kwakk.s3.ap-northeast-2.amazonaws.com/media/public/3.PNG"
+      src={Info.imgurl}
     />
   );
 
@@ -66,12 +66,37 @@ const Detail = ({ user, match }) => {
             </div>
             <div className="flex mb-4">
               <span className="flex items-center">
-                {star}
-                {star}
-                {star}
-                {star}
-                {emptyStar}
-                <span className="text-gray-600 ml-3">리뷰개수</span>
+                {[...Array(Fstar)].map((n, index) => {
+                  return (
+                    <svg
+                      fill="currentColor"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 text-red-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                  );
+                })}
+                {[...Array(Estar)].map((n, index) => {
+                  return (
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 text-red-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                  );
+                })}
+                <span className="text-gray-600 ml-3">{Info.category}</span>
               </span>
             </div>
             <p className="leading-relaxed">{Info.content}</p>

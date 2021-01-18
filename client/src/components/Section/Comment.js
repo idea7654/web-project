@@ -22,13 +22,13 @@ const Comment = ({ info, user }) => {
   };
   const handlePost = () => {
     let body = {
-      user: user.user.username,
+      owner: user.user.username,
       comment: Comment,
       star: Review,
     };
     console.log(body);
     // axios
-    //   .post(`http://localhost:8000/api/${info.id}/comment`, body)
+    //   .post(`http://localhost:8000/api/comment/{info.id}`, body)
     //   .then((res) => {
     //     console.log(res);
     //   })

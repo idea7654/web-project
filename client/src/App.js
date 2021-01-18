@@ -9,6 +9,7 @@ import { withRouter, Route } from "react-router-dom";
 import Detail from "./components/Section/Detail";
 import List from "./components/Section/List";
 import Category from "./components/Section/Category";
+import CategoryList from "./components/Section/CategoryList";
 //import axios from "axios";
 const App = () => {
   const [User, setUser] = useState("");
@@ -18,9 +19,6 @@ const App = () => {
   //     console.log(res);
   //   });
   // }, []);
-  useEffect(() => {
-    console.log(User);
-  }, []);
 
   return (
     <div>
@@ -33,7 +31,14 @@ const App = () => {
         render={({ match }) => <Detail user={User} match={match} />}
       />
       <Route path="/list" render={(location) => <List location={location} />} />
-      <Route path="/category" render={() => <Category />} />
+      <Route
+        path="/category"
+        render={({ match }) => <Category match={match} />}
+      />
+      {/* <Route
+        path="/category/:id"
+        render={({ match }) => <CategoryList match={match} />}
+      /> */}
       <Footer />
     </div>
   );

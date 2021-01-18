@@ -9,28 +9,30 @@ const CarouselComponent = ({ history }) => {
   };
 
   const [Product, setProduct] = useState([]);
+  const [BeforeRender, setBeforeRender] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/posts").then((res) => {
       setProduct(res.data);
+      setBeforeRender(true);
     });
   }, []);
 
   const Product1 = (
     <div onClick={() => handleClick(Product[Product.length - 1].id)}>
-      <img src="109672.jpg" />
+      {BeforeRender ? <img src={Product[Product.length - 1].imgurl} /> : ""}
     </div>
   );
 
   const Product2 = (
     <div onClick={() => handleClick(Product[Product.length - 2].id)}>
-      <img src="109672.jpg" />
+      {BeforeRender ? <img src={Product[Product.length - 2].imgurl} /> : ""}
     </div>
   );
 
   const Product3 = (
     <div onClick={() => handleClick(Product[Product.length - 3].id)}>
-      <img src="109672.jpg" />
+      {BeforeRender ? <img src={Product[Product.length - 3].imgurl} /> : ""}
     </div>
   );
   return (

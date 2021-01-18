@@ -14,7 +14,7 @@ const List = ({ history, location }) => {
     axios
       .get(`http://localhost:8000/api/list?search=${searchQuery}`)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         //res.data.map((data) => {
         //  setProList([...ProList, data]);
         //});
