@@ -145,24 +145,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_ACCESS_KEY_ID = "" # 액세스 키
-AWS_SECRET_ACCESS_KEY = "" # 비밀 액세스 키
-
-AWS_REGION = "ap-northeast-2" # AWS 지역
-
-AWS_STORAGE_BUCKET_NAME = "kwakk" # 버킷 이름
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
-    AWS_STORAGE_BUCKET_NAME, AWS_REGION)
-
-AWS_STATIC_LOCATION = 'static'
-STATICFILES_STORAGE = 'djangoreactapi.storages.StaticStorage'
-
-AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
-DEFAULT_FILE_STORAGE = 'djangoreactapi.storages.PublicMediaStorage'
-
-AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
-PRIVATE_FILE_STORAGE = 'djangoreactapi.storages.PrivateMediaStorage'
