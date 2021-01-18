@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, PostImage
+from .models import Post, PostImage, Category
 
 class PhotoInline(admin.TabularInline):
     model = PostImage
@@ -11,3 +11,4 @@ class PostAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Post, PostAdmin)
+admin.site.register(Category)

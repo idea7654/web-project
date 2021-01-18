@@ -149,8 +149,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = "AKIAWQGAQ7R7LQRVZTAK" # 액세스 키
-AWS_SECRET_ACCESS_KEY = "HWlPwwRVFl0nAlnbwrNaP5Kmx4X85jibGRMDn4rd" # 비밀 액세스 키
+AWS_ACCESS_KEY_ID = "" # 액세스 키
+AWS_SECRET_ACCESS_KEY = "" # 비밀 액세스 키
 
 AWS_REGION = "ap-northeast-2" # AWS 지역
 

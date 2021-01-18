@@ -1,20 +1,29 @@
 from rest_framework import serializers
-from .models import Post, PostImage
+from .models import Post, PostImage, Category
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+  
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
         model = PostImage
-        fields = ['image']
+        fields = ('image', 'post',)
+
 
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
+  
 
     class Meta:
         model = Post
         fields = (
             'id',
             'owner',
+            'category',
             'title',
             'pname',
             'content',
@@ -22,7 +31,6 @@ class PostSerializer(serializers.ModelSerializer):
             'images',
             'imgurl',
             'cdate',
-            
             
         )
         
@@ -32,3 +40,5 @@ class PostSerializer(serializers.ModelSerializer):
        for image_data in images_data.getlist('image'):
            PostImage.objects.create(post=post, image=image_data)
        return post
+
+
