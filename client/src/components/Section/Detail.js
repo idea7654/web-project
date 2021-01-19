@@ -39,7 +39,6 @@ const Detail = ({ user, match }) => {
     const star = await Math.round(res.data.star);
     await setFstar(star);
     await setEstar(5 - star);
-    await console.log(Fstar, Estar);
   }, []);
 
   const image = (

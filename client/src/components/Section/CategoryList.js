@@ -29,7 +29,7 @@ const CategoryList = ({ history, match }) => {
                     <img
                       alt="Placeholder"
                       className="block h-auto w-full"
-                      src={data.imgurl}
+                      src={"http://localhost:8000" + data.imgurl}
                     />
                   </a>
 
