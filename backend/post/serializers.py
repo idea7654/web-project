@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, PostImage, Category
+from .models import Post, PostImage, Category, Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -11,12 +11,16 @@ class CategorySerializer(serializers.ModelSerializer):
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
         model = PostImage
-        fields = ('image', 'post',)
+        fields = '__all__'
 
+class CommentSerializer(serializers.ModelSerializer):
+   class Meta:
+        model = Comment
+        fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
-  
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
@@ -31,7 +35,7 @@ class PostSerializer(serializers.ModelSerializer):
             'images',
             'imgurl',
             'cdate',
-            
+            'comments',
         )
         
     def create(self, validated_data):
@@ -42,3 +46,26 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
 
+class BoardOnlySerializer(serializers.ModelSerializer):
+    parent_comments = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'parent_comments')
+
+    def get_parent_comments(self, obj):
+        parent_comments = obj.comments.filter(parent=None)
+        serializer = CommentSerializer(parent_comments, many=True)
+        return serializer.data
+
+class ImgOnlySerializer(serializers.ModelSerializer):
+    parent_comments = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'parent_comments')
+
+    def get_parent_comments(self, obj):
+        parent_comments = obj.commentss.filter(parentt=None)
+        serializer = PostImageSerializer(parent_comments, many=True)
+        return serializer.data
