@@ -8,8 +8,8 @@ from django.conf import settings
 
 router = DefaultRouter()
 router.register('posts', views.PostViewSet)
-router.register('comment', views.CommentPost)
-router.register(r'view/comment', views.CommentOnlyViewSet)
+#router.register('comment', views.CommentPost)
+router.register(r'comment', views.CommentOnlyViewSet)
 router.register(r'img/comment', views.ImgOnlyViewSet)
 
 urlpatterns = [
