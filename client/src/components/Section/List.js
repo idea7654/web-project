@@ -15,11 +15,10 @@ const List = ({ history, location }) => {
       .get(`http://localhost:8000/api/list?search=${searchQuery}`)
       .then((res) => {
         setProList(res.data);
-        setBeforeRender(true);
+        if (res.data.length !== 0) {
+          setBeforeRender(true);
+        }
       });
-    if (ProList.length === 0) {
-      await setBeforeRender(false);
-    }
   }, []);
 
   return (
