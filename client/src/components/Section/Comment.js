@@ -21,12 +21,16 @@ const Comment = ({ info, user }) => {
     setComment(e.target.value);
   };
   const handlePost = () => {
-    let body = {
-      owner: user.user.username,
-      comment: Comment,
-      star: Review,
-    };
-    console.log(body);
+    if (user.user) {
+      let body = {
+        owner: user.user.username,
+        comment: Comment,
+        star: Review,
+      };
+    } else {
+      alert("로그인이 필요합니다!");
+    }
+
     // axios
     //   .post(`http://localhost:8000/api/comment/{info.id}`, body)
     //   .then((res) => {
@@ -37,130 +41,34 @@ const Comment = ({ info, user }) => {
     //   });
   };
 
-  const emptyStar1 = (
-    <div onClick={() => handleClick(1)}>
-      <svg
-        fill={Star[0]}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-4 h-4 text-red-500"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-      </svg>
-    </div>
-  );
+  const userComment = (
+    <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+      <div className="flex flex-row justify-center mr-2">
+        <img
+          alt="avatar"
+          width="48"
+          height="48"
+          className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+          src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+        />
+        <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
+          @Tim Motti
+        </h3>
+      </div>
 
-  const emptyStar2 = (
-    <div onClick={() => handleClick(2)}>
-      <svg
-        fill={Star[1]}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-4 h-4 text-red-500"
-        viewBox="0 0 24 24"
+      <p
+        style={{ width: "90%" }}
+        className="text-gray-600 text-lg text-center md:text-left "
       >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-      </svg>
-    </div>
-  );
-
-  const emptyStar3 = (
-    <div onClick={() => handleClick(3)}>
-      <svg
-        fill={Star[2]}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-4 h-4 text-red-500"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-      </svg>
-    </div>
-  );
-
-  const emptyStar4 = (
-    <div onClick={() => handleClick(4)}>
-      <svg
-        fill={Star[3]}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-4 h-4 text-red-500"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-      </svg>
-    </div>
-  );
-
-  const emptyStar5 = (
-    <div onClick={() => handleClick(5)}>
-      <svg
-        fill={Star[4]}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        className="w-4 h-4 text-red-500"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-      </svg>
+        <span className="text-purple-600 font-semibold">@Shanel</span> Hello.
+        Yes, the entire exterior, including the walls.{" "}
+      </p>
     </div>
   );
   return (
     <div>
-      <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-        <div className="flex flex-row justify-center mr-2">
-          <img
-            alt="avatar"
-            width="48"
-            height="48"
-            className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-            src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-          />
-          <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
-            @Shanel
-          </h3>
-        </div>
-
-        <p
-          style={{ width: "90%" }}
-          className="text-gray-600 text-lg text-center md:text-left "
-        >
-          Hi good morning will it be the entire house.{" "}
-        </p>
-      </div>
-      <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-        <div className="flex flex-row justify-center mr-2">
-          <img
-            alt="avatar"
-            width="48"
-            height="48"
-            className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-            src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-          />
-          <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
-            @Tim Motti
-          </h3>
-        </div>
-
-        <p
-          style={{ width: "90%" }}
-          className="text-gray-600 text-lg text-center md:text-left "
-        >
-          <span className="text-purple-600 font-semibold">@Shanel</span> Hello.
-          Yes, the entire exterior, including the walls.{" "}
-        </p>
-      </div>
+      {userComment}
+      {userComment}
       <div className="flex justify-center">
         <div className="flex rounded-md mt-8">
           <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white">
@@ -198,11 +106,23 @@ const Comment = ({ info, user }) => {
             </div>
             <div className="w-full md:w-full flex justify-between items-start md:w-full px-3">
               <div className="flex flex-row">
-                {emptyStar1}
-                {emptyStar2}
-                {emptyStar3}
-                {emptyStar4}
-                {emptyStar5}
+                {Star.map((data, index) => {
+                  return (
+                    <div key={index + 1} onClick={() => handleClick(index + 1)}>
+                      <svg
+                        fill={Star[index]}
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        className="w-4 h-4 text-red-500"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                      </svg>
+                    </div>
+                  );
+                })}
               </div>
               <div className="-mr-1">
                 <input

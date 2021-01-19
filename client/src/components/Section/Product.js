@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 const Product = ({ history }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    history.push("/detail");
+  const handleClick = (id) => {
+    history.push(`/detail/${id}`);
   };
   const [Sales, setSales] = useState([]);
   const [BeforeRender, setBeforeRender] = useState(false);
@@ -32,7 +31,7 @@ const Product = ({ history }) => {
               return (
                 <div className="mt-3 my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                   <article className="overflow-hidden rounded-lg shadow-lg">
-                    <a onClick={handleClick}>
+                    <a onClick={() => handleClick(data.id)}>
                       <img
                         alt="Placeholder"
                         className="block h-auto w-full"
