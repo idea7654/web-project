@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 const Comment = ({ info, user }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
-
   const handleClick = (index) => {
     setStar(
       Star.map((data, i) => {
@@ -28,61 +27,42 @@ const Comment = ({ info, user }) => {
         comment: Comment,
         star: Review,
       };
+      axios
+        .post(`http://localhost:8000/api/comment/{info.id}`, body)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          alert("로그인이 필요합니다!");
+        });
     } else {
       alert("로그인이 필요합니다!");
     }
-
-    // axios
-    //   .post(`http://localhost:8000/api/comment/{info.id}`, body)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     alert("로그인이 필요합니다!");
-    //   });
   };
 
-  const userComments = (
-    <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-      <div className="flex flex-row justify-center mr-2">
-        <img
-          alt="avatar"
-          width="48"
-          height="48"
-          className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-          src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-        />
-        <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
-          @Tim Motti
-        </h3>
-      </div>
-
-      <p
-        style={{ width: "90%" }}
-        className="text-gray-600 text-lg text-center md:text-left "
-      >
-        <span className="text-purple-600 font-semibold">@Shanel</span> Hello.
-        Yes, the entire exterior, including the walls.{" "}
-      </p>
-    </div>
-  );
   return (
     <div>
       {info.comments
         ? info.comments.map((data) => {
             return (
-              <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-                <div className="flex flex-row justify-center mr-2">
-                  <img
-                    alt="avatar"
-                    width="48"
-                    height="48"
-                    className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-                    src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-                  />
-                  <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
-                    {data.comment_user}
-                  </h3>
+              <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                <div className="w-full flex flex-row justify-between mx-2">
+                  <div className="flex flex-row justify-center mr-2">
+                    <img
+                      alt="avatar"
+                      width="48"
+                      height="48"
+                      className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                      src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                    />
+                    <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
+                      {data.comment_user}
+                    </h3>
+                  </div>
+                  <div className="flex flex-row mt-2">
+                    <img className="w-6 h-6 mr-2" src="/good.png" alt="" />
+                    <img className="w-6 h-6 mr-2" src="/bad.png" alt="" />
+                  </div>
                 </div>
 
                 <p
