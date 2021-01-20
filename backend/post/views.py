@@ -50,18 +50,19 @@ class CategorySearchViewSet(APIView):
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
 
+
+
+
+
 # 다중이미지 테스트중
-class PostImageSerializer(generics.ListAPIView):
-        queryset = PostImage.objects.all()
-        serializer_class = PostImageSerializer
+# class PostImageSerializer(generics.ListAPIView):
+#         queryset = PostImage.objects.all()
+#         serializer_class = PostImageSerializer
 
 # 다중이미지 포스트에매칭시켜 불러오기 테스트
-class PostImageDetail(generics.ListAPIView):
-        queryset = PostImage.objects.filter(post_id=5)
-        serializer_class = PostImageSerializer
-
-
-
+# class PostImageDetail(generics.ListAPIView):
+#         queryset = PostImage.objects.filter(post_id=5)
+#         serializer_class = PostImageSerializer
 
 # # 최신글 x개
 # class RecentPostViewSet(APIView):

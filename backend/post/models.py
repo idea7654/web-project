@@ -23,15 +23,16 @@ class Post(models.Model):
         return self.title
 
 class PostImage(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='commentss')        # 게시글 이미지매칭 키
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='imgkey')        # 게시글 이미지매칭 키
     image = models.ImageField(blank=True, null=True)            # 이미지
-    parentt = models.ForeignKey('self', related_name='replyy', on_delete=models.CASCADE, null=True, blank=True)
+    parents = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE, null=True, blank=True)
 
 class Comment(models.Model):
     comment = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, related_name='comments')
     comment_text = models.CharField(max_length=200)
     comment_user = models.ForeignKey(User, on_delete=models.CASCADE, null = True, related_name='comments')
     comment_date = models.DateTimeField('date published', default=timezone.now)
+    cstar = models.PositiveSmallIntegerField(default=5, null=False) 
     parent = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE, null=True, blank=True)
     
     class Meta:

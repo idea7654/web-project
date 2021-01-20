@@ -6,6 +6,7 @@ from .serializers import (
     LoginUserSerializer,
 )
 from knox.models import AuthToken
+from django.contrib.auth.models import User
 
 
 
@@ -52,3 +53,8 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
