@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
         model = PostImage
-        fields = '__all__'
+        fields = ('post','image')
 
 class CommentSerializer(serializers.ModelSerializer):
    class Meta:
@@ -66,6 +66,6 @@ class ImgOnlySerializer(serializers.ModelSerializer):
         fields = ('id', 'parent_comments')
 
     def get_parent_comments(self, obj):
-        parent_comments = obj.commentss.filter(parentt=None)
+        parent_comments = obj.imgkey.filter(parents=None)
         serializer = PostImageSerializer(parent_comments, many=True)
         return serializer.data
