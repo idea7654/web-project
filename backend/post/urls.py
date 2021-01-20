@@ -10,7 +10,7 @@ router = DefaultRouter()
 router.register('posts', views.PostViewSet)
 #router.register('comment', views.CommentPost)
 router.register(r'comment', views.CommentOnlyViewSet)
-router.register(r'imags', views.ImgOnlyViewSet)
+router.register(r'images', views.ImgOnlyViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
