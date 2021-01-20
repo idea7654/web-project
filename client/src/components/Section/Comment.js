@@ -42,59 +42,6 @@ const Comment = ({ info, user }) => {
 
   return (
     <div>
-      {info.comments
-        ? info.comments.map((data) => {
-            return (
-              <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-                <div className="w-full flex flex-row justify-between mx-2">
-                  <div className="flex flex-row justify-center mr-2">
-                    <img
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                      className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-                      src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-                    />
-                    <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
-                      {data.comment_user}
-                    </h3>
-                  </div>
-                  <div className="flex flex-row mt-2">
-                    <img className="w-6 h-6 mr-2" src="/good.png" alt="" />
-                    <img className="w-6 h-6 mr-2" src="/bad.png" alt="" />
-                  </div>
-                </div>
-
-                <p
-                  style={{ width: "90%" }}
-                  className="text-gray-600 text-lg text-center md:text-left "
-                >
-                  {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
-                  {data.comment_text}{" "}
-                </p>
-              </div>
-            );
-          })
-        : ""}
-      <div className="flex justify-center">
-        <div className="flex rounded-md mt-8">
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white">
-            <span>Prev</span>
-          </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
-            <span>1</span>
-          </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
-            <span>2</span>
-          </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
-            <span>3</span>
-          </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white">
-            <span>Next</span>
-          </a>
-        </div>
-      </div>
       <div className="flex mx-auto items-center justify-center shadow-lg mt-6 mx-8 mb-4 max-w-lg">
         <form className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -142,6 +89,59 @@ const Comment = ({ info, user }) => {
             </div>
           </div>
         </form>
+      </div>
+      {info.comments
+        ? info.comments.map((data) => {
+            return (
+              <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                <div className="w-full flex flex-row justify-between mx-2">
+                  <div className="flex flex-row justify-center mr-2">
+                    <img
+                      alt="avatar"
+                      width="48"
+                      height="48"
+                      className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                      src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                    />
+                    <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
+                      {data.comment_user}
+                    </h3>
+                  </div>
+                  <div className="flex flex-row mt-2">
+                    <img className="w-6 h-6 mr-2" src="/good.png" alt="" />
+                    <img className="w-6 h-6 mr-2" src="/bad.png" alt="" />
+                  </div>
+                </div>
+
+                <p
+                  style={{ width: "90%" }}
+                  className="text-gray-600 text-lg text-center md:text-left "
+                >
+                  {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
+                  {data.comment_text}{" "}
+                </p>
+              </div>
+            );
+          })
+        : ""}
+      <div className="flex justify-center">
+        <div className="flex rounded-md mt-8 mb-6">
+          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white">
+            <span>Prev</span>
+          </a>
+          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+            <span>1</span>
+          </a>
+          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+            <span>2</span>
+          </a>
+          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+            <span>3</span>
+          </a>
+          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white">
+            <span>Next</span>
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import Comment from "./Comment";
 import Ar from "./Ar";
 import Star from "./Star";
 import axios from "axios";
+import DetailImage from "./DetailImage";
 const Detail = ({ user, match }) => {
   const [Info, setInfo] = useState({
     pname: "",
@@ -13,6 +14,7 @@ const Detail = ({ user, match }) => {
   });
   const [Estar, setEstar] = useState([]);
   const [Fstar, setFstar] = useState([]);
+  const [Images, setImages] = useState([]);
   useEffect(async () => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
@@ -52,12 +54,11 @@ const Detail = ({ user, match }) => {
     const star = await Math.round(res.data.star);
     await setFstar(star);
     await setEstar(5 - star);
-  }, []);
-
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/images/1").then((res) => {
-      console.log(res);
-    });
+    await axios
+      .get(`http://localhost:8000/api/images/${res.data.id}`)
+      .then((res) => {
+        setImages(res.data.parent_comments);
+      });
   }, []);
 
   const image = (
@@ -74,7 +75,8 @@ const Detail = ({ user, match }) => {
     <div>
       <div className="container px-5 py-10 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          {image}
+          {/* {image} */}
+          <DetailImage Images={Images} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <div className="flex justify-between">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
