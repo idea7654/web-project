@@ -4,6 +4,7 @@ const Comment = ({ info, user }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
+
   const handleClick = (index) => {
     setStar(
       Star.map((data, i) => {
@@ -41,7 +42,7 @@ const Comment = ({ info, user }) => {
     //   });
   };
 
-  const userComment = (
+  const userComments = (
     <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
       <div className="flex flex-row justify-center mr-2">
         <img
@@ -67,8 +68,34 @@ const Comment = ({ info, user }) => {
   );
   return (
     <div>
-      {userComment}
-      {userComment}
+      {info.comments
+        ? info.comments.map((data) => {
+            return (
+              <div className="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                <div className="flex flex-row justify-center mr-2">
+                  <img
+                    alt="avatar"
+                    width="48"
+                    height="48"
+                    className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                    src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                  />
+                  <h3 className="text-purple-600 font-semibold text-lg text-center md:text-left ">
+                    {data.comment_user}
+                  </h3>
+                </div>
+
+                <p
+                  style={{ width: "90%" }}
+                  className="text-gray-600 text-lg text-center md:text-left "
+                >
+                  {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
+                  {data.comment_text}{" "}
+                </p>
+              </div>
+            );
+          })
+        : ""}
       <div className="flex justify-center">
         <div className="flex rounded-md mt-8">
           <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white">
