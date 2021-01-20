@@ -17,6 +17,7 @@ const Detail = ({ user, match }) => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
       .then((res) => {
+        //console.log(res);
         switch (res.data.category) {
           case 1:
             res.data.category = "의자";
@@ -36,10 +37,27 @@ const Detail = ({ user, match }) => {
         }
         return res;
       });
+    await axios.get("http://localhost:8000/api/auth/user/list").then((res2) => {
+      res2.data.map((data) => {
+        res.data.comments.map((data2) => {
+          if (data2.comment_user === data.id) {
+            data2.comment_user = data.username;
+          }
+          return data2;
+        });
+        return data;
+      });
+    });
     await setInfo(res.data);
     const star = await Math.round(res.data.star);
     await setFstar(star);
     await setEstar(5 - star);
+  }, []);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/images/1").then((res) => {
+      console.log(res);
+    });
   }, []);
 
   const image = (
