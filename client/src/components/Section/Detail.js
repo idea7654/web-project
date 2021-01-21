@@ -19,7 +19,7 @@ const Detail = ({ user, match }) => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
       .then((res) => {
-        //console.log(res);
+        console.log(res);
         switch (res.data.category) {
           case 1:
             res.data.category = "의자";

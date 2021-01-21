@@ -28,7 +28,7 @@ const Comment = ({ info, user }) => {
         star: Review,
       };
       axios
-        .post(`http://localhost:8000/api/comment/{info.id}`, body)
+        .post(`http://localhost:8000/api/comment/${info.id}`, body)
         .then((res) => {
           console.log(res);
         })
