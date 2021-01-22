@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import GoodBad from "./GoodBad";
 import axios from "axios";
 const Comment = ({ info, user }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
@@ -107,10 +108,7 @@ const Comment = ({ info, user }) => {
                       {data.comment_user}
                     </h3>
                   </div>
-                  <div className="flex flex-row mt-2">
-                    <img className="w-6 h-6 mr-2" src="/good.png" alt="" />
-                    <img className="w-6 h-6 mr-2" src="/bad.png" alt="" />
-                  </div>
+                  <GoodBad />
                 </div>
 
                 <p
