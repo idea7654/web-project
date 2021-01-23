@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
-const Comment = ({ info, user }) => {
+import { UserContext } from "../../context/context";
+const Comment = ({ info }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
+  const [User, setUser] = useContext(UserContext);
   const handleClick = (index) => {
     setStar(
       Star.map((data, i) => {
@@ -22,9 +24,9 @@ const Comment = ({ info, user }) => {
     setComment(e.target.value);
   };
   const handlePost = () => {
-    if (user.user) {
+    if (User.user) {
       let body = {
-        owner: user.user.username,
+        owner: User.user.username,
         comment: Comment,
         star: Review,
       };

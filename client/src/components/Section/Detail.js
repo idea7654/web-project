@@ -4,7 +4,8 @@ import Ar from "./Ar";
 import Star from "./Star";
 import axios from "axios";
 import DetailImage from "./DetailImage";
-const Detail = ({ user, match }) => {
+
+const Detail = ({ match }) => {
   const [Info, setInfo] = useState({
     pname: "",
     content: "",
@@ -15,6 +16,7 @@ const Detail = ({ user, match }) => {
   const [Estar, setEstar] = useState([]);
   const [Fstar, setFstar] = useState([]);
   const [Images, setImages] = useState([]);
+
   useEffect(async () => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
@@ -93,7 +95,7 @@ const Detail = ({ user, match }) => {
           </div>
         </div>
       </div>
-      <Comment info={Info} user={user} />
+      <Comment info={Info} />
     </div>
   );
 };

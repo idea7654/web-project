@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
-const Navbar = ({ history, User }) => {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+import { UserContext } from "../../context/context";
 
+const Navbar = ({ history }) => {
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [User, setUser] = useContext(UserContext);
   const mainRoute = () => {
     history.push("/");
     setNavbarOpen(false);
@@ -74,6 +76,15 @@ const Navbar = ({ history, User }) => {
                 >
                   <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
                   <span className="ml-2">브랜드</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
+                  href="#pablo"
+                >
+                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                  <span className="ml-2">Help</span>
                 </a>
               </li>
             </ul>

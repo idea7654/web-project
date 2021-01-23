@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-const Login = ({ history, setUser }) => {
+import { UserContext } from "../../context/context";
+const Login = ({ history }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
-
+  const [User, setUser] = useContext(UserContext);
   const changeId = (e) => {
     setId(e.target.value);
   };

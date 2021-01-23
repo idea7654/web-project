@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-const Register = ({ history, setUser }) => {
+import { UserContext } from "../../context/context";
+const Register = ({ history }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
-
+  const [User, setUser] = useContext(UserContext);
   const changeId = (e) => {
     setId(e.target.value);
   };
