@@ -3,9 +3,12 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.filters import SearchFilter
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
+from rest_framework import status
 
 from .models import Post, PostImage, Category, Comment
-from .serializers import PostImageSerializer, PostSerializer,CategorySerializer, CommentSerializer, BoardOnlySerializer, ImgOnlySerializer
+from .serializers import CommentlistSerializer, PostImageSerializer, PostSerializer,CategorySerializer, CommentSerializer, BoardOnlySerializer, ImgOnlySerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -51,6 +54,14 @@ class CategorySearchViewSet(APIView):
         return Response(serializer.data)
 
 
+@api_view(['POST'])
+def choices_view(request, comment_id):
+    post = get_object_or_404(Post, pk=comment_id)
+    serializer = CommentlistSerializer(data=request.data)
+    if serializer.is_valid():
+        comment = serializer.save(comment=post)
+        return Response(CommentlistSerializer(comment).data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

@@ -16,6 +16,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('list/', views.ListPost.as_view()),
     path('list/<int:pk>/', views.DetailPost.as_view()),
+    path('comment/<int:comment_id>/submit/', views.choices_view),
 
 
     # 카테고리

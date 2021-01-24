@@ -1,3 +1,5 @@
+
+from django.utils import timezone
 from rest_framework import serializers
 from .models import Post, PostImage, Category, Comment
 
@@ -18,6 +20,8 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
 
+
+
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
@@ -37,7 +41,8 @@ class PostSerializer(serializers.ModelSerializer):
             'cdate',
             'comments',
         )
-        
+
+    
     def create(self, validated_data):
        images_data = self.context['request'].FILES
        post = Post.objects.create(**validated_data)
@@ -45,7 +50,7 @@ class PostSerializer(serializers.ModelSerializer):
            PostImage.objects.create(post=post, image=image_data)
        return post
 
-
+# 댓글
 class BoardOnlySerializer(serializers.ModelSerializer):
     parent_comments = serializers.SerializerMethodField()
 
@@ -58,6 +63,7 @@ class BoardOnlySerializer(serializers.ModelSerializer):
         serializer = CommentSerializer(parent_comments, many=True)
         return serializer.data
 
+# 다중이미지
 class ImgOnlySerializer(serializers.ModelSerializer):
     parent_comments = serializers.SerializerMethodField()
 
@@ -69,3 +75,13 @@ class ImgOnlySerializer(serializers.ModelSerializer):
         parent_comments = obj.imgkey.filter(parents=None)
         serializer = PostImageSerializer(parent_comments, many=True)
         return serializer.data
+
+class CommentlistSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    comment_text = serializers.CharField(max_length=200)
+    cstar = serializers.IntegerField(default=5) 
+    comment_user = serializers.IntegerField(read_only=True)
+    comment_date = serializers.DateTimeField(default=timezone.now)
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
