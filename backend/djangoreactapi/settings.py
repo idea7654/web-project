@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'knox',
     'api',
     'imagekit',
+
 ]
 
 REST_FRAMEWORK = {

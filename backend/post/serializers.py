@@ -76,12 +76,10 @@ class ImgOnlySerializer(serializers.ModelSerializer):
         serializer = PostImageSerializer(parent_comments, many=True)
         return serializer.data
 
-class CommentlistSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    comment_text = serializers.CharField(max_length=200)
-    cstar = serializers.IntegerField(default=5) 
-    comment_user = serializers.IntegerField(read_only=True)
-    comment_date = serializers.DateTimeField(default=timezone.now)
+class CommentlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
 
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
