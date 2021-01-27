@@ -27,8 +27,17 @@ const Login = ({ history }) => {
     axios
       .post("http://localhost:8000/api/auth/login/", body)
       .then((res) => {
-        console.log(res);
         setUser(res.data);
+        const token = `token ${res.data.token}`;
+        axios
+          .get("http://localhost:8000/api/auth/user/", {
+            headers: {
+              Authorization: token,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          });
         history.push("/");
       })
       .catch((err) => {
