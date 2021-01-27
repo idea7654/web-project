@@ -24,19 +24,21 @@ const Comment = ({ info }) => {
     setComment(e.target.value);
   };
   const handlePost = () => {
+    console.log(User.user.id, Comment, Review);
     if (User.user) {
       let body = {
-        owner: User.user.username,
-        comment: Comment,
-        star: Review,
+        comment_user: User.user.id,
+        comment_text: Comment,
+        cstar: Review,
       };
       axios
-        .post(`http://localhost:8000/api/comment/${info.id}/submit`, body)
+        .post(`http://localhost:8000/api/comment/${info.id}/submit/`, body)
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
-          alert("로그인이 필요합니다!");
+          //alert("로그인이 필요합니다!");
+          console.error(err);
         });
     } else {
       alert("로그인이 필요합니다!");

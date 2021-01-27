@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Landing from "./components/Section/Landing";
 import Footer from "./components/Footer/Footer";
@@ -9,10 +9,17 @@ import Detail from "./components/Section/Detail";
 import List from "./components/Section/List";
 import Category from "./components/Section/Category";
 import { UserContext } from "./context/context";
-
+import axios from "axios";
 const App = () => {
   const [User, setUser] = useState("");
 
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/auth/user", {
+      headers: {
+        Authentication: User.token,
+      },
+    });
+  }, []);
   return (
     <div>
       <UserContext.Provider value={[User, setUser]}>
