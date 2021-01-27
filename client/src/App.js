@@ -16,7 +16,6 @@ const App = () => {
   return (
     <div>
       <UserContext.Provider value={[User, setUser]}>
-        {/* <Navbar User={User} /> */}
         <Navbar />
         <Route path="/" render={() => <Landing />} exact />
         <Route path="/login" render={() => <Login />} />
