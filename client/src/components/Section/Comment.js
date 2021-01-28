@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
 import { UserContext } from "../../context/context";
-const Comment = ({ info }) => {
+const Comment = ({ info, setInfo }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
@@ -24,7 +24,6 @@ const Comment = ({ info }) => {
     setComment(e.target.value);
   };
   const handlePost = () => {
-    console.log(User.user.id, Comment, Review);
     if (User.user) {
       let body = {
         comment_user: User.user.id,
@@ -34,7 +33,8 @@ const Comment = ({ info }) => {
       axios
         .post(`http://localhost:8000/api/comment/${info.id}/submit/`, body)
         .then((res) => {
-          console.log(res);
+          //console.log(info, res.data);
+          setInfo();
         })
         .catch((err) => {
           //alert("로그인이 필요합니다!");

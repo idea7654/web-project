@@ -95,7 +95,7 @@ const Detail = ({ match }) => {
           </div>
         </div>
       </div>
-      <Comment info={Info} />
+      <Comment info={Info} setInfo={setInfo} />
     </div>
   );
 };

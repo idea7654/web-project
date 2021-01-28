@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../context/context";
-
+import axios from "axios";
 const Navbar = ({ history }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [User, setUser] = useContext(UserContext);
@@ -20,6 +20,20 @@ const Navbar = ({ history }) => {
   const categoryRoute = () => {
     history.push("/category");
     setNavbarOpen(false);
+  };
+
+  const handleLogOut = () => {
+    const token = `token ${User.token}`;
+    console.log(token);
+    axios
+      .post("http://localhost:8000/api/auth/logout/", token, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        setUser("");
+      });
   };
 
   return (
@@ -87,6 +101,19 @@ const Navbar = ({ history }) => {
                   <span className="ml-2">Help</span>
                 </a>
               </li>
+              {User ? (
+                <li className="nav-item">
+                  <a
+                    className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
+                    onClick={handleLogOut}
+                  >
+                    <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">LogOut</span>
+                  </a>
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
           </div>
         </div>
