@@ -32,13 +32,25 @@ const Comment = ({ info, setInfo }) => {
       };
       axios
         .post(`http://localhost:8000/api/comment/${info.id}/submit/`, body)
-        .then((res) => {
-          //console.log(info, res.data);
-          setInfo();
+        .then(async (res) => {
+          await axios
+            .get("http://localhost:8000/api/auth/user/list")
+            .then((res2) => {
+              res2.data.map((data) => {
+                if (data.id === res.data.comment_user) {
+                  res.data.comment_user = data.username;
+                }
+                return data;
+              });
+            });
+          await setInfo({
+            ...info,
+            comments: [res.data, ...info.comments],
+          });
         })
         .catch((err) => {
           //alert("로그인이 필요합니다!");
-          console.error(err);
+          console.log(err);
         });
     } else {
       alert("로그인이 필요합니다!");
