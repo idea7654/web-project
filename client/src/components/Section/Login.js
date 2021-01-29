@@ -28,16 +28,8 @@ const Login = ({ history }) => {
       .post("http://localhost:8000/api/auth/login/", body)
       .then((res) => {
         setUser(res.data);
-        const token = `token ${res.data.token}`;
-        axios
-          .get("http://localhost:8000/api/auth/user/", {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((res) => {
-            console.log(res);
-          });
+        console.log(res.data);
+        window.sessionStorage.setItem("token", res.data.token);
         history.push("/");
       })
       .catch((err) => {

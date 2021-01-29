@@ -10,14 +10,26 @@ import List from "./components/Section/List";
 import Category from "./components/Section/Category";
 import { UserContext } from "./context/context";
 import axios from "axios";
+import Help from "./components/Section/Help";
 const App = () => {
   const [User, setUser] = useState("");
 
-  // useEffect(() => {
-  //   if(User === ""){
-  //     axios.get()
-  //   }
-  // }, []);
+  useEffect(() => {
+    const sessionToken = window.sessionStorage.getItem("token");
+    if (sessionToken) {
+      const token = `token ${sessionToken}`;
+      axios
+        .get("http://localhost:8000/api/auth/user/", {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setUser({ token: sessionToken, user: res.data });
+        });
+    }
+  }, []);
   return (
     <div>
       <UserContext.Provider value={[User, setUser]}>
@@ -37,6 +49,7 @@ const App = () => {
           path="/category"
           render={({ match }) => <Category match={match} />}
         />
+        <Route path="/help" render={() => <Help />} />
         <Footer />
       </UserContext.Provider>
     </div>

@@ -22,9 +22,13 @@ const Navbar = ({ history }) => {
     setNavbarOpen(false);
   };
 
+  const helpRoute = () => {
+    history.push("/help");
+    setNavbarOpen(false);
+  };
+
   const handleLogOut = () => {
     const token = `token ${User.token}`;
-    console.log(token);
     axios
       .post("http://localhost:8000/api/auth/logout/", token, {
         headers: {
@@ -95,7 +99,7 @@ const Navbar = ({ history }) => {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                  href="#pablo"
+                  onClick={helpRoute}
                 >
                   <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
                   <span className="ml-2">Help</span>
