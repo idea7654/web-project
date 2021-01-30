@@ -7,6 +7,8 @@ const Comment = ({ info, setInfo }) => {
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
   const [User, setUser] = useContext(UserContext);
+  const [Page, setPage] = useState(1);
+  const PageLimit = 5;
   const handleClick = (index) => {
     setStar(
       Star.map((data, i) => {
@@ -55,6 +57,22 @@ const Comment = ({ info, setInfo }) => {
     } else {
       alert("로그인이 필요합니다!");
     }
+  };
+
+  const handlePrev = () => {
+    if (Page > 1) {
+      setPage(Page - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (Page < 3) {
+      setPage(Page + 1);
+    }
+  };
+
+  const changePage = (page) => {
+    setPage(page);
   };
 
   return (
@@ -108,51 +126,67 @@ const Comment = ({ info, setInfo }) => {
         </form>
       </div>
       {info.comments
-        ? info.comments.map((data) => {
-            return (
-              <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-                <div className="w-full flex flex-row justify-between mx-2">
-                  <div className="flex flex-row justify-center mr-2">
-                    <img
-                      alt="avatar"
-                      width="48"
-                      height="48"
-                      className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-                      src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-                    />
-                    <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
-                      {data.comment_user}
-                    </h3>
+        ? info.comments.map((data, index) => {
+            if (index < Page * PageLimit && index >= (Page - 1) * PageLimit)
+              return (
+                <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                  <div className="w-full flex flex-row justify-between mx-2">
+                    <div className="flex flex-row justify-center mr-2">
+                      <img
+                        alt="avatar"
+                        width="48"
+                        height="48"
+                        className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                        src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                      />
+                      <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
+                        {data.comment_user}
+                      </h3>
+                    </div>
+                    <GoodBad />
                   </div>
-                  <GoodBad />
-                </div>
 
-                <p
-                  style={{ width: "90%" }}
-                  className="text-gray-600 text-lg text-center md:text-left "
-                >
-                  {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
-                  {data.comment_text}{" "}
-                </p>
-              </div>
-            );
+                  <p
+                    style={{ width: "90%" }}
+                    className="text-gray-600 text-lg text-center md:text-left "
+                  >
+                    {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
+                    {data.comment_text}{" "}
+                  </p>
+                </div>
+              );
           })
         : ""}
       <div className="flex justify-center">
         <div className="flex rounded-md mt-8 mb-6">
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white">
+          <a
+            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l"
+            onClick={handlePrev}
+          >
             <span>Prev</span>
           </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+          <a
+            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
+            onClick={() => changePage(1)}
+          >
             <span>1</span>
           </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+          <a
+            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
+            onClick={() => changePage(2)}
+          >
             <span>2</span>
           </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white">
+          <a
+            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
+            onClick={() => changePage(3)}
+          >
             <span>3</span>
           </a>
-          <a className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white">
+          <a
+            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r"
+            onClick={handleNext}
+          >
             <span>Next</span>
           </a>
         </div>
