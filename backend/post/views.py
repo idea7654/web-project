@@ -6,7 +6,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 
 from .models import Post, PostImage, Category, Comment
 from .serializers import CommentlistSerializer, PostImageSerializer, PostSerializer,CategorySerializer, CommentSerializer, BoardOnlySerializer, ImgOnlySerializer
@@ -29,13 +28,6 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    permission_classes = [
-        IsAuthenticated,
-    ]
-
-    def perform_create(self, serializer):
-        print(self.request.user)
-        serializer.save(owner=self.request.user)
 
 class CommentPost(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
