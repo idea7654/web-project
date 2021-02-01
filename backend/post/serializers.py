@@ -25,6 +25,20 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
+    star = serializers.SerializerMethodField('scoresAverage') #댓글 별점 평균
+
+
+    # 댓글 평균
+    def scoresAverage(self, obj):
+        length = obj.comments.count()
+        if length != 0:
+            total = 0
+            for comment in obj.comments.all():
+                total += comment.cstar
+            result = round(total/length, 2)
+        else:
+            result = 0
+        return result
 
     class Meta:
         model = Post
@@ -35,11 +49,11 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'pname',
             'content',
-            'star',
             'images',
             'imgurl',
             'cdate',
             'comments',
+            'star',
         )
 
     
