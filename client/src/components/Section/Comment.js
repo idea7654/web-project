@@ -51,7 +51,6 @@ const Comment = ({ info, setInfo }) => {
           });
         })
         .catch((err) => {
-          //alert("로그인이 필요합니다!");
           console.log(err);
         });
     } else {
@@ -165,24 +164,22 @@ const Comment = ({ info, setInfo }) => {
           >
             <span>Prev</span>
           </a>
-          <a
-            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
-            onClick={() => changePage(1)}
-          >
-            <span>1</span>
-          </a>
-          <a
-            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
-            onClick={() => changePage(2)}
-          >
-            <span>2</span>
-          </a>
-          <a
-            className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
-            onClick={() => changePage(3)}
-          >
-            <span>3</span>
-          </a>
+          {info.comments
+            ? [...Array(Math.ceil(info.comments.length / PageLimit))].map(
+                (data, index) => {
+                  if (index < 3) {
+                    return (
+                      <a
+                        className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
+                        onClick={() => changePage(index + 1)}
+                      >
+                        <span>{index + 1}</span>
+                      </a>
+                    );
+                  }
+                }
+              )
+            : ""}
           <a
             className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r"
             onClick={handleNext}
