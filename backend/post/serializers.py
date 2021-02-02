@@ -24,7 +24,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = serializers.SerializerMethodField()
     star = serializers.SerializerMethodField('scoresAverage') #댓글 별점 평균
 
 
@@ -56,6 +56,10 @@ class PostSerializer(serializers.ModelSerializer):
             'star',
         )
 
+    def get_comments(self, obj):
+        parent_comments = obj.comments.filter(parent=None)
+        serializer = CommentSerializer(parent_comments, many=True)
+        return serializer.data
     
     def create(self, validated_data):
        images_data = self.context['request'].FILES
