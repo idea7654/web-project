@@ -15,7 +15,7 @@ const Reply = ({ info, setShowModal, id }) => {
       };
 
       axios
-        .post(`http://localhost:8000/api/comment/${id}/submit/`, body)
+        .post(`http://localhost:8000/api/reply/${id}/`, body)
         .then((res) => {
           console.log(res);
         })
