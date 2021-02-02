@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
 import { UserContext } from "../../context/context";
+import Reply from "./Reply";
 const Comment = ({ info, setInfo }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
   const [User, setUser] = useContext(UserContext);
   const [Page, setPage] = useState(1);
+  const [ReplyData, setReplyData] = useState(null);
+  const [ShowModal, setShowModal] = useState(false);
   const PageLimit = 5;
   const handleClick = (index) => {
     setStar(
@@ -74,6 +77,11 @@ const Comment = ({ info, setInfo }) => {
     setPage(page);
   };
 
+  const handleReply = (data) => {
+    setShowModal(true);
+    setReplyData(data);
+  };
+
   return (
     <div>
       <div className="flex mx-auto items-center justify-center shadow-lg mt-6 mx-8 mb-4 max-w-lg">
@@ -128,30 +136,33 @@ const Comment = ({ info, setInfo }) => {
         ? info.comments.map((data, index) => {
             if (index < Page * PageLimit && index >= (Page - 1) * PageLimit)
               return (
-                <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-                  <div className="w-full flex flex-row justify-between mx-2">
-                    <div className="flex flex-row justify-center mr-2">
-                      <img
-                        alt="avatar"
-                        width="48"
-                        height="48"
-                        className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-                        src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-                      />
-                      <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
-                        {data.comment_user}
-                      </h3>
+                <div>
+                  <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                    <div className="w-full flex flex-row justify-between mx-2">
+                      <div className="flex flex-row justify-center mr-2">
+                        <img
+                          alt="avatar"
+                          width="48"
+                          height="48"
+                          className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                          src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                        />
+                        <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
+                          {data.comment_user}
+                        </h3>
+                      </div>
+                      <GoodBad />
                     </div>
-                    <GoodBad />
-                  </div>
 
-                  <p
-                    style={{ width: "90%" }}
-                    className="text-gray-600 text-lg text-center md:text-left "
-                  >
-                    {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
-                    {data.comment_text}{" "}
-                  </p>
+                    <p
+                      style={{ width: "90%" }}
+                      className="text-gray-600 text-lg text-center md:text-left "
+                      onClick={() => handleReply(data)}
+                    >
+                      {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
+                      {data.comment_text}{" "}
+                    </p>
+                  </div>
                 </div>
               );
           })
@@ -188,6 +199,11 @@ const Comment = ({ info, setInfo }) => {
           </a>
         </div>
       </div>
+      {ShowModal ? (
+        <Reply info={ReplyData} setShowModal={setShowModal} id={info.id} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
