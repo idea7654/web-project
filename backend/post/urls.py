@@ -7,17 +7,17 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 router = DefaultRouter()
-router.register('posts', views.PostViewSet)
-#router.register('comment', views.CommentPost)
-router.register(r'comment', views.CommentOnlyViewSet)
-router.register(r'images', views.ImgOnlyViewSet)
+router.register('posts', views.PostViewSet) # 메인에 묶여있음
+router.register(r'comment', views.CommentOnlyViewSet) # 댓글 목록
+router.register(r'images', views.ImgOnlyViewSet) # 다중이미지 
+#router.register('comm', views.CommentPost) 
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('list/', views.ListPost.as_view()),
-    path('list/<int:pk>/', views.DetailPost.as_view()),
-    path('comment/<int:comment_id>/submit/', views.choices_view),
+    path('list/', views.ListPost.as_view()), # 글목록
+    path('list/<int:pk>/', views.DetailPost.as_view()), # 글내용
 
+    path('comment/<int:comment_id>/submit/', views.choices_view), # 댓글쓰기
 
     # 카테고리
     path('category/', views.CategoryViewSet.as_view()),
@@ -28,7 +28,6 @@ urlpatterns = [
     #path('img/', views.PostImageSerializer.as_view()),          # 다중이미지 테스트 url  
 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
     
 

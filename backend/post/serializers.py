@@ -2,13 +2,6 @@
 from django.utils import timezone
 from rest_framework import serializers
 from .models import Post, PostImage, Category, Comment
-
-
-class CategorySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Category
-        fields = '__all__'
   
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
@@ -16,10 +9,17 @@ class PostImageSerializer(serializers.ModelSerializer):
         fields = ('post','image')
 
 class CommentSerializer(serializers.ModelSerializer):
-   class Meta:
+    reply = serializers.SerializerMethodField()
+
+    class Meta:
         model = Comment
         fields = '__all__'
 
+    def get_reply(self, instance):
+    	# recursive
+        serializer = self.__class__(instance.reply, many=True)
+        serializer.bind('', self)
+        return serializer.data
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -97,3 +97,9 @@ class CommentlistSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
+
+# 카테고리
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'

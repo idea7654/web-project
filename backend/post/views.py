@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 
 from .models import Post, PostImage, Category, Comment
-from .serializers import CommentlistSerializer, PostImageSerializer, PostSerializer,CategorySerializer, CommentSerializer, BoardOnlySerializer, ImgOnlySerializer
+from .serializers import CommentlistSerializer, PostSerializer,CategorySerializer, BoardOnlySerializer, ImgOnlySerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -28,11 +28,6 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-
-class CommentPost(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    
 class CommentOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Post.objects.all()
     serializer_class = BoardOnlySerializer
@@ -65,6 +60,14 @@ def choices_view(request, comment_id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+
+# (parent=None)으로 중복제거
+# class CommentPost(viewsets.ModelViewSet):
+#     queryset = Comment.objects.filter(parent=None)
+#     serializer_class = CommentSerializer
+    
 
 # 다중이미지 테스트중
 # class PostImageSerializer(generics.ListAPIView):
