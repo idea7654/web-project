@@ -46,6 +46,12 @@ const Detail = ({ match }) => {
           if (data2.comment_user === data.id) {
             data2.comment_user = data.username;
           }
+          data2.reply.map((data3) => {
+            if (data3.comment_user === data.id) {
+              data3.comment_user = data.username;
+            }
+            return data3;
+          });
           return data2;
         });
         return data;
