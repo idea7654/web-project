@@ -1,17 +1,19 @@
-from rest_framework.viewsets import ModelViewSet
-from django.shortcuts import render
-from rest_framework import generics
 from rest_framework.filters import SearchFilter
-from rest_framework import viewsets
-from rest_framework.decorators import api_view
-from django.shortcuts import get_object_or_404
-from rest_framework import status
+from django.shortcuts import get_object_or_404, render
 
-from .models import Post, PostImage, Category, Comment
-from .serializers import CommentlistSerializer, PostSerializer,CategorySerializer, BoardOnlySerializer, ImgOnlySerializer
 from rest_framework.response import Response
+
+from rest_framework.decorators import api_view
+from rest_framework import viewsets, generics, status
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 
+from .permissions import IsAuthorOrReadonly, IsAuthenticated
+from .models import Post, PostImage, Category, Comment
+from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer, ImgOnlySerializer
+
+
+# 검색전용? 밑에 포스트뷰랑 합체시도바람
 class ListPost(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -20,18 +22,30 @@ class ListPost(generics.ListAPIView):
     filter_backends = [SearchFilter]
     search_fields = ['title','content','pname']
 
+#  조회 수정 삭제 포스트뷰셋이랑겹침 
 class DetailPost(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+# 게시글생성
+class PostWrite(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+# 비회원 모든 게시글및 댓글조회 회원 수정삭제
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-class CommentOnlyViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = BoardOnlySerializer
+    permission_classes = [
+        IsAuthorOrReadonly,
+    ]
 
+# 다중이미지 
 class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Post.objects.all()
     serializer_class = ImgOnlySerializer
@@ -42,14 +56,15 @@ class CategoryViewSet(APIView):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
-
+        
+# 카테고리별 목록
 class CategorySearchViewSet(APIView):
     def get(self, request, id, format=None):
         queryset = Post.objects.filter(category__id=id)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
 
-
+# 댓글쓰기
 @api_view(['POST'])
 def choices_view(request, comment_id):
     post = get_object_or_404(Post, pk=comment_id)
@@ -60,15 +75,16 @@ def choices_view(request, comment_id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# # 게시글 id별 댓글목록
+# class CommentOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Post.objects.all()
+#     serializer_class = BoardOnlySerializer
 
-
-
-# (parent=None)으로 중복제거
+#  # (parent=None)으로 중복제거
 # class CommentPost(viewsets.ModelViewSet):
 #     queryset = Comment.objects.filter(parent=None)
 #     serializer_class = CommentSerializer
     
-
 # 다중이미지 테스트중
 # class PostImageSerializer(generics.ListAPIView):
 #         queryset = PostImage.objects.all()
