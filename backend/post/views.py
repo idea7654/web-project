@@ -36,6 +36,9 @@ class PostWrite(generics.CreateAPIView):
         IsAuthenticated,
     ]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 # 비회원 모든 게시글및 댓글조회 회원 수정삭제
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
