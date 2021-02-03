@@ -28,10 +28,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
-    comments = serializers.SerializerMethodField()
-    owner_username = ReadOnlyField(source='owner.username')
+    comments = serializers.SerializerMethodField() 
+    owner_username = ReadOnlyField(source='owner.username') # 작성자 아이디표시
+    img = serializers.SerializerMethodField() # 멀티이미지 표시
     star = serializers.SerializerMethodField('scoresAverage') #댓글 별점 평균
-
 
     # 댓글 평균
     def scoresAverage(self, obj):
@@ -59,9 +59,15 @@ class PostSerializer(serializers.ModelSerializer):
             'cdate',
             'star',
             'owner_username',
+            'img',
             'comments',
         )
 
+    def get_img(self, obj):
+        parent_comments = obj.imgkey.all()
+        serializer = PostImageSerializer(parent_comments, many=True)
+        return serializer.data
+        
     # 코멘트목록 답글 중복을없애기위해 parent=None 으로 설정
     def get_comments(self, obj):
         parent_comments = obj.comments.filter(parent=None)
@@ -77,18 +83,6 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
 
-# 다중이미지
-class ImgOnlySerializer(serializers.ModelSerializer):
-    parent_comments = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Post
-        fields = ('id', 'parent_comments')
-
-    def get_parent_comments(self, obj):
-        parent_comments = obj.imgkey.filter(parents=None)
-        serializer = PostImageSerializer(parent_comments, many=True)
-        return serializer.data
 
 # 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
 class CommentlistSerializer(serializers.ModelSerializer):
@@ -104,6 +98,19 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
+# 다중이미지
+class ImgOnlySerializer(serializers.ModelSerializer):
+    parent_comments = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'parent_comments')
+
+    def get_parent_comments(self, obj):
+        parent_comments = obj.imgkey.filter(parents=None)
+        serializer = PostImageSerializer(parent_comments, many=True)
+        return serializer.data
 
 # # 댓글
 # class BoardOnlySerializer(serializers.ModelSerializer):
