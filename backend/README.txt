@@ -16,6 +16,9 @@ https://donis-note.medium.com/django-rest-framework-%EB%8B%A4%EC%A4%91-%EC%9D%B4
 https://velog.io/@lemontech119/DRF%EB%A1%9C-api-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C3-%EB%8C%93%EA%B8%80%EC%9E%91%EC%84%B1
 
 댓글쓰기
+https://www.agiliq.com/blog/2019/04/drf-polls/
+https://tests4geeks.com/blog/django-rest-framework-tutorial/     
+
 https://github.com/akshar-raaj/drf-polls-api/tree/v1.0/polls
 
 대댓글
@@ -24,3 +27,14 @@ https://dev-navill.tistory.com/15
 참조
 https://blog.naver.com/PostView.nhn?blogId=funlucky1002&logNo=221662169888&parentCategoryNo=&categoryNo=8&viewDate=&isShowPopularPosts=false&from=postList
 https://blog.naver.com/funlucky1002/221552258641
+
+인증
+https://github.com/encode/django-rest-framework/blob/master/rest_framework/authentication.py
+
+별점 평균
+https://m.blog.naver.com/rbdud96/221765701646
+https://www.vinta.com.br/blog/2018/django-rest-framework-read-write-serializers/
+
+
+2.3
+이름자동으로넣기 필요 (해결)
