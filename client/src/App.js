@@ -25,7 +25,6 @@ const App = () => {
           },
         })
         .then((res) => {
-          console.log(res);
           setUser({ token: sessionToken, user: res.data });
         });
     }

@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 const Reply = ({ info, setShowModal, id }) => {
   const [Value, setValue] = useState("");
   const [User, setUser] = useContext(UserContext);
+  const [ReplyData, setReplyData] = useState("");
   const handlePost = () => {
     //axios.post();
     if (User) {
@@ -16,8 +17,19 @@ const Reply = ({ info, setShowModal, id }) => {
 
       axios
         .post(`http://localhost:8000/api/reply/${id}/`, body)
-        .then((res) => {
-          console.log(res);
+        .then(async (res) => {
+          console.log(res.data);
+          await axios
+            .get("http://localhost:8000/api/auth/user/list")
+            .then((res2) => {
+              res2.data.map((data) => {
+                if (data.id === res.data.comment_user) {
+                  res.data.comment_user = data.username;
+                }
+                return data;
+              });
+            });
+          await setReplyData([...ReplyData, res.data]);
         })
         .catch((err) => {
           console.error(err);
@@ -30,6 +42,10 @@ const Reply = ({ info, setShowModal, id }) => {
     e.preventDefault();
     setValue(e.target.value);
   };
+
+  useEffect(() => {
+    setReplyData(info.reply);
+  }, []);
   return (
     <div>
       <div className="w-full px-3 pt-10 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -69,34 +85,36 @@ const Reply = ({ info, setShowModal, id }) => {
               <p className="my-4 text-gray-600 text-lg leading-relaxed">
                 Reply
               </p>
-              {info.reply.map((data, index) => {
-                return (
-                  <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-inner mb-4">
-                    <div className="w-full flex flex-row justify-between mx-2">
-                      <div className="flex flex-row justify-center mr-2">
-                        <img
-                          alt="avatar"
-                          width="48"
-                          height="48"
-                          className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
-                          src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
-                        />
-                        <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
-                          {data.comment_user}
-                        </h3>
-                      </div>
-                    </div>
+              {ReplyData
+                ? ReplyData.map((data, index) => {
+                    return (
+                      <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-inner mb-4">
+                        <div className="w-full flex flex-row justify-between mx-2">
+                          <div className="flex flex-row justify-center mr-2">
+                            <img
+                              alt="avatar"
+                              width="48"
+                              height="48"
+                              className="rounded-full w-10 h-10 mr-4 shadow-lg mb-4"
+                              src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"
+                            />
+                            <h3 className="mt-2 text-purple-600 font-semibold text-lg text-center md:text-left ">
+                              {data.comment_user}
+                            </h3>
+                          </div>
+                        </div>
 
-                    <p
-                      style={{ width: "90%" }}
-                      className="text-gray-600 text-lg text-center md:text-left "
-                    >
-                      {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
-                      {data.comment_text}{" "}
-                    </p>
-                  </div>
-                );
-              })}
+                        <p
+                          style={{ width: "90%" }}
+                          className="text-gray-600 text-lg text-center md:text-left "
+                        >
+                          {/* <span className="text-purple-600 font-semibold">@Shanel</span>{" "} */}
+                          {data.comment_text}{" "}
+                        </p>
+                      </div>
+                    );
+                  })
+                : ""}
             </div>
             {/* form */}
             <div>
