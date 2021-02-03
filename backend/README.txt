@@ -37,4 +37,4 @@ https://www.vinta.com.br/blog/2018/django-rest-framework-read-write-serializers/
 
 
 2.3
-이름자동으로넣기 필요
+이름자동으로넣기 필요 (해결)

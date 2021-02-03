@@ -2,7 +2,8 @@
 from django.utils import timezone
 from rest_framework import serializers
 from .models import Post, PostImage, Category, Comment
-  
+from rest_framework.serializers import ReadOnlyField
+
 # 다중이미지 
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
@@ -12,6 +13,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 # 댓글 답글
 class CommentSerializer(serializers.ModelSerializer):
     reply = serializers.SerializerMethodField()
+    username = ReadOnlyField(source='comment_user.username')
 
     class Meta:
         model = Comment
@@ -27,6 +29,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     images = PostImageSerializer(many=True, read_only=True)
     comments = serializers.SerializerMethodField()
+    owner_username = ReadOnlyField(source='owner.username')
     star = serializers.SerializerMethodField('scoresAverage') #댓글 별점 평균
 
 
@@ -54,8 +57,9 @@ class PostSerializer(serializers.ModelSerializer):
             'images',
             'imgurl',
             'cdate',
-            'comments',
             'star',
+            'owner_username',
+            'comments',
         )
 
     # 코멘트목록 답글 중복을없애기위해 parent=None 으로 설정
