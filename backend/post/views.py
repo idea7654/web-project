@@ -32,13 +32,6 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    permission_classes = [
-        IsAuthorOrReadonly,
-    ]
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
 
 # 카테고리 설정
 class CategoryViewSet(APIView):
