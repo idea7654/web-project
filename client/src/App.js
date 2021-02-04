@@ -11,6 +11,7 @@ import Category from "./components/Section/Category";
 import { UserContext } from "./context/context";
 import axios from "axios";
 import Help from "./components/Section/Help";
+import CreateProduct from "./components/Section/CreateProduct";
 const App = () => {
   const [User, setUser] = useState("");
 
@@ -49,6 +50,7 @@ const App = () => {
           render={({ match }) => <Category match={match} />}
         />
         <Route path="/help" render={() => <Help />} />
+        <Route path="/create" render={() => <CreateProduct />} />
         <Footer />
       </UserContext.Provider>
     </div>

@@ -18,7 +18,6 @@ const Reply = ({ info, setShowModal, id }) => {
       axios
         .post(`http://localhost:8000/api/reply/${id}/`, body)
         .then(async (res) => {
-          console.log(res.data);
           await axios
             .get("http://localhost:8000/api/auth/user/list")
             .then((res2) => {

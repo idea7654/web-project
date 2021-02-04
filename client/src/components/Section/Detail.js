@@ -61,29 +61,14 @@ const Detail = ({ match }) => {
     const star = await Math.round(res.data.star);
     await setFstar(star);
     await setEstar(5 - star);
-    await axios
-      .get(`http://localhost:8000/api/images/${res.data.id}`)
-      .then((res) => {
-        setImages(res.data.parent_comments);
-      });
   }, []);
 
-  const image = (
-    <img
-      alt="ecommerce"
-      className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-      //src="https://kwakk.s3.ap-northeast-2.amazonaws.com/media/public/3.PNG"
-      src={Info.imgurl}
-    />
-  );
-
-  //const comment =
   return (
     <div>
       <div className="container px-5 py-10 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           {/* {image} */}
-          <DetailImage Images={Images} />
+          <DetailImage Images={Info.img} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <div className="flex justify-between">
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
