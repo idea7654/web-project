@@ -58,7 +58,7 @@ const CreateProduct = () => {
     await formData.append("data", body);
 
     await axios
-      .post("http://localhost:8000/api/post/", formData, {
+      .post("http://localhost:8000/api/posts/", formData, {
         headers: {
           Authorization: User.token,
           processData: false,
