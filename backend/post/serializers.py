@@ -83,7 +83,6 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
 
-
 # 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
 class CommentlistSerializer(serializers.ModelSerializer):
     class Meta:
@@ -98,19 +97,20 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+        
 
-# 다중이미지
-class ImgOnlySerializer(serializers.ModelSerializer):
-    parent_comments = serializers.SerializerMethodField()
+# # 다중이미지
+# class ImgOnlySerializer(serializers.ModelSerializer):
+#     parent_comments = serializers.SerializerMethodField()
 
-    class Meta:
-        model = Post
-        fields = ('id', 'parent_comments')
+#     class Meta:
+#         model = Post
+#         fields = ('id', 'parent_comments')
 
-    def get_parent_comments(self, obj):
-        parent_comments = obj.imgkey.filter(parents=None)
-        serializer = PostImageSerializer(parent_comments, many=True)
-        return serializer.data
+#     def get_parent_comments(self, obj):
+#         parent_comments = obj.imgkey.filter(parents=None)
+#         serializer = PostImageSerializer(parent_comments, many=True)
+#         return serializer.data
 
 # # 댓글
 # class BoardOnlySerializer(serializers.ModelSerializer):

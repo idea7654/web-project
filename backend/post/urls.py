@@ -8,7 +8,7 @@ from django.conf import settings
 
 router = DefaultRouter()
 router.register('posts', views.PostViewSet) # 메인에 묶여있음
-router.register(r'images', views.ImgOnlyViewSet) # 다중이미지 
+#router.register(r'images', views.ImgOnlyViewSet) # 다중이미지 
 #router.register(r'comment', views.CommentOnlyViewSet) # 포스트별 댓글 목록
 #router.register('comm', views.CommentPost) 
 
@@ -16,8 +16,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('list/', views.ListPost.as_view()), # 글목록
     path('list/<int:pk>/', views.DetailPost.as_view()), # 글내용
-    path('post/', views.PostWrite.as_view()), # 글쓰기
-
 
     path('comment/<int:comment_id>/submit/', views.choices_view), # 댓글쓰기 HTTP Method (GET, PUT, POST, DELETE등등)의 행위가 URI 표현으로 들어가서는 안된다. 
     path('reply/<int:comment_id>/', views.choices_view), # 답글

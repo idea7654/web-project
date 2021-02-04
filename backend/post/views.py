@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
 from .models import Post, PostImage, Category, Comment
-from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer, ImgOnlySerializer
+from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer
 
 
 # 검색전용? 밑에 포스트뷰랑 합체시도바람
@@ -27,18 +27,6 @@ class DetailPost(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-# 게시글생성
-class PostWrite(generics.CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-    permission_classes = [
-        IsAuthenticated,
-    ]
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
 # 비회원 모든 게시글및 댓글조회 회원 수정삭제
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
@@ -48,10 +36,9 @@ class PostViewSet(ModelViewSet):
         IsAuthorOrReadonly,
     ]
 
-# 다중이미지 
-class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = ImgOnlySerializer
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 # 카테고리 설정
 class CategoryViewSet(APIView):
@@ -77,6 +64,11 @@ def choices_view(request, comment_id):
         return Response(CommentlistSerializer(comment).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+# # 다중이미지 
+# class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Post.objects.all()
+#     serializer_class = ImgOnlySerializer
 
 # # 게시글 id별 댓글목록
 # class CommentOnlyViewSet(viewsets.ReadOnlyModelViewSet):
