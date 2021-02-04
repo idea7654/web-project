@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 const Dropdown = ({ Category, setCategory }) => {
   const [DropVisible, setDropVisible] = useState(false);
+  const [TextCategory, setTextCategory] = useState("Category");
   const handleCategory = (id) => {
-    switch (id) {
-      case 1:
-        id = "의자";
-        break;
-      case 2:
-        id = "책상";
-        break;
-      case 3:
-        id = "서랍";
-        break;
-      case 4:
-        id = "소형수납";
-        break;
-      case 5:
-        id = "주방 부속품";
-        break;
-    }
     setCategory(id);
     setDropVisible(!DropVisible);
+    switch (id) {
+      case 1:
+        setTextCategory("의자");
+        break;
+      case 2:
+        setTextCategory("책상");
+        break;
+      case 3:
+        setTextCategory("서랍");
+        break;
+      case 4:
+        setTextCategory("소형수납");
+        break;
+      case 5:
+        setTextCategory("주방 부속품");
+        break;
+    }
   };
   return (
     <div>
@@ -29,7 +30,7 @@ const Dropdown = ({ Category, setCategory }) => {
           onClick={() => setDropVisible(!DropVisible)}
           className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
         >
-          <span>{Category ? Category : "Category"}</span>
+          <span>{Category ? TextCategory : "Category"}</span>
         </button>
         {DropVisible ? (
           <ul className="absolute text-gray-700 pt-1">

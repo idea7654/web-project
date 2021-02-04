@@ -46,22 +46,18 @@ const CreateProduct = () => {
     e.preventDefault();
     let formData = await new FormData();
     for (const i in Content) {
-      await formData.append(`img${i}`, Content[i]);
+      if (i < Content.length) {
+        await formData.append("image", Content[i]);
+      }
     }
-    let body = await {
-      title: Title,
-      pname: Pname,
-      category: Category,
-      content: Context,
-      img: formData,
-    };
-    await formData.append("data", body);
-
+    await formData.append("title", Title);
+    await formData.append("pname", Pname);
+    await formData.append("category", Category);
+    await formData.append("content", Context);
     await axios
       .post("http://localhost:8000/api/posts/", formData, {
         headers: {
           Authorization: User.token,
-          processData: false,
         },
       })
       .then((res) => {
