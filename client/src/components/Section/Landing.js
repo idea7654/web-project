@@ -2,15 +2,7 @@ import React, { useState, useEffect } from "react";
 import Search from "./Search";
 import CarouselComponent from "./CarouselComponent";
 import Product from "./Product";
-//import axios from "axios";
 const Landing = () => {
-  // const [Sales, setSales] = useState([]);
-  // useEffect(() => {
-  //   axios.get("http://localhost:8000/api").then(async (res) => {
-  //     await setSales([...Sales, res.data]);
-  //     await console.log(Sales);
-  //   });
-  // }, []);
   return (
     <div className="flex flex-col">
       <div>

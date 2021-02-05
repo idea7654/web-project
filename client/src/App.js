@@ -29,6 +29,7 @@ const App = () => {
           setUser({ token: sessionToken, user: res.data });
         });
     }
+    console.log(User);
   }, []);
   return (
     <div>

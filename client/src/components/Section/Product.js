@@ -35,7 +35,7 @@ const Product = ({ history }) => {
                       <img
                         alt="Placeholder"
                         className="block h-auto w-full"
-                        src={data.imgurl}
+                        src={"http://localhost:8000" + data.img[0].image}
                       />
                     </a>
 

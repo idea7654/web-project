@@ -20,19 +20,39 @@ const CarouselComponent = ({ history }) => {
 
   const Product1 = (
     <div onClick={() => handleClick(Product[Product.length - 1].id)}>
-      {BeforeRender ? <img src={Product[Product.length - 1].imgurl} /> : ""}
+      {BeforeRender ? (
+        <img
+          src={
+            "http://localhost:8000" + Product[Product.length - 1].img[0].image
+          }
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 
   const Product2 = (
     <div onClick={() => handleClick(Product[Product.length - 2].id)}>
-      {BeforeRender ? <img src={Product[Product.length - 2].imgurl} /> : ""}
+      {BeforeRender ? (
+        <img
+          src={"http://localhost:8000" + Product[Product.length - 2].img[0]}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 
   const Product3 = (
     <div onClick={() => handleClick(Product[Product.length - 3].id)}>
-      {BeforeRender ? <img src={Product[Product.length - 3].imgurl} /> : ""}
+      {BeforeRender ? (
+        <img
+          src={"http://localhost:8000" + Product[Product.length - 3].img[0]}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
   return (

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
 import Ar from "./Ar";
 import Star from "./Star";
 import axios from "axios";
 import DetailImage from "./DetailImage";
-
+import Update from "./Update";
+import { UserContext } from "../../context/context";
 const Detail = ({ match }) => {
   const [Info, setInfo] = useState({
     pname: "",
@@ -16,7 +17,7 @@ const Detail = ({ match }) => {
   const [Estar, setEstar] = useState([]);
   const [Fstar, setFstar] = useState([]);
   const [Images, setImages] = useState([]);
-
+  const [User, setUser] = useContext(UserContext);
   useEffect(async () => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
@@ -65,7 +66,7 @@ const Detail = ({ match }) => {
 
   return (
     <div>
-      <div className="container px-5 py-10 mx-auto">
+      <div className="container px-5 py-5 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           {/* {image} */}
           <DetailImage Images={Info.img} />
@@ -87,6 +88,19 @@ const Detail = ({ match }) => {
         </div>
       </div>
       <Comment info={Info} setInfo={setInfo} />
+      {console.log(User.user.id, Info)}
+      {User.user.id === Info.owner ? (
+        <div className="flex justify-end mb-3">
+          <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+            수정
+          </a>
+          <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+            삭제
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
