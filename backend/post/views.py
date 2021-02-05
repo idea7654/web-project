@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
 from .models import Post, PostImage, Category, Comment
-from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer
+from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
 
 
 # 검색전용? 밑에 포스트뷰랑 합체시도바람
@@ -65,6 +65,14 @@ def choices_view(request, comment_id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CategorySearchViewSett(APIView):
+    def get(self, request, id, format=None):
+        queryset = PostImage.objects.filter(post_id=id)
+        serializer = PostImageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+   
+        
 # # 다중이미지 
 # class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):
 #     queryset = Post.objects.all()
