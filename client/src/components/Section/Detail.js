@@ -16,7 +16,7 @@ const Detail = ({ match }) => {
   });
   const [Estar, setEstar] = useState([]);
   const [Fstar, setFstar] = useState([]);
-  const [Images, setImages] = useState([]);
+  const [UpdateFlag, setUpdateFlag] = useState(false);
   const [User, setUser] = useContext(UserContext);
   useEffect(async () => {
     const res = await axios
@@ -63,43 +63,64 @@ const Detail = ({ match }) => {
     await setFstar(star);
     await setEstar(5 - star);
   }, []);
-
+  const handleUpdate = () => {
+    setUpdateFlag(true);
+  };
   return (
     <div>
-      <div className="container px-5 py-5 mx-auto">
-        <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          {/* {image} */}
-          <DetailImage Images={Info.img} />
-          <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-            <div className="flex justify-between">
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                {Info.pname}
-              </h1>
-              <Ar />
+      {UpdateFlag ? (
+        <Update info={Info} setUpdateFlag={setUpdateFlag} />
+      ) : (
+        <div>
+          <div className="container px-5 py-5 mx-auto">
+            <div className="lg:w-4/5 mx-auto flex flex-wrap">
+              {/* {image} */}
+              <DetailImage Images={Info.img} />
+              <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                <div className="flex justify-between">
+                  <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                    {Info.pname}
+                  </h1>
+                  <Ar />
+                </div>
+                <div className="flex mb-4">
+                  <span className="flex items-center">
+                    <Star fStar={Fstar} eStar={Estar} />
+                    <span className="text-gray-600 ml-3">{Info.category}</span>
+                  </span>
+                </div>
+                <p className="leading-relaxed">{Info.content}</p>
+              </div>
             </div>
-            <div className="flex mb-4">
-              <span className="flex items-center">
-                <Star fStar={Fstar} eStar={Estar} />
-                <span className="text-gray-600 ml-3">{Info.category}</span>
-              </span>
+          </div>
+          <Comment info={Info} setInfo={setInfo} />
+          {User.user.id === Info.owner ? (
+            <div className="flex justify-end mb-3">
+              <a
+                onClick={handleUpdate}
+                className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+              >
+                수정
+              </a>
+              <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+                삭제
+              </a>
             </div>
-            <p className="leading-relaxed">{Info.content}</p>
+          ) : (
+            ""
+          )}
+          <div className="flex justify-end mb-3">
+            <a
+              onClick={handleUpdate}
+              className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+            >
+              수정
+            </a>
+            <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+              삭제
+            </a>
           </div>
         </div>
-      </div>
-      <Comment info={Info} setInfo={setInfo} />
-      {console.log(User.user.id, Info)}
-      {User.user.id === Info.owner ? (
-        <div className="flex justify-end mb-3">
-          <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
-            수정
-          </a>
-          <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
-            삭제
-          </a>
-        </div>
-      ) : (
-        ""
       )}
     </div>
   );
