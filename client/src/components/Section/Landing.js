@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import Search from "./Search";
 import CarouselComponent from "./CarouselComponent";
 import Product from "./Product";
-const Landing = () => {
+import { withRouter } from "react-router-dom";
+const Landing = ({ history }) => {
+  const handleClick = () => {
+    history.push("/create");
+  };
   return (
     <div className="flex flex-col">
       <div>
@@ -22,8 +26,11 @@ const Landing = () => {
         </div>
         <Product />
       </div>
+      <div>
+        <a onClick={handleClick}>작성</a>
+      </div>
     </div>
   );
 };
 
-export default Landing;
+export default withRouter(Landing);

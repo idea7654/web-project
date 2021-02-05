@@ -15,6 +15,7 @@ const CarouselComponent = ({ history }) => {
     axios.get("http://localhost:8000/api/posts").then((res) => {
       setProduct(res.data);
       setBeforeRender(true);
+      console.log(res.data);
     });
   }, []);
 
@@ -36,7 +37,9 @@ const CarouselComponent = ({ history }) => {
     <div onClick={() => handleClick(Product[Product.length - 2].id)}>
       {BeforeRender ? (
         <img
-          src={"http://localhost:8000" + Product[Product.length - 2].img[0]}
+          src={
+            "http://localhost:8000" + Product[Product.length - 2].img[0].image
+          }
         />
       ) : (
         ""
@@ -48,7 +51,9 @@ const CarouselComponent = ({ history }) => {
     <div onClick={() => handleClick(Product[Product.length - 3].id)}>
       {BeforeRender ? (
         <img
-          src={"http://localhost:8000" + Product[Product.length - 3].img[0]}
+          src={
+            "http://localhost:8000" + Product[Product.length - 3].img[0].image
+          }
         />
       ) : (
         ""

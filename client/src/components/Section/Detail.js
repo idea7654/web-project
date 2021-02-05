@@ -6,6 +6,7 @@ import axios from "axios";
 import DetailImage from "./DetailImage";
 import Update from "./Update";
 import { UserContext } from "../../context/context";
+import { withRouter } from "react-router-dom";
 const Detail = ({ match }) => {
   const [Info, setInfo] = useState({
     pname: "",
@@ -126,4 +127,4 @@ const Detail = ({ match }) => {
   );
 };
 
-export default Detail;
+export default withRouter(Detail);

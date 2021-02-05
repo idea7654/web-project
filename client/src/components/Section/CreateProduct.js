@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import Dropdown from "./Dropdown";
 import axios from "axios";
 import { UserContext } from "../../context/context";
-const CreateProduct = () => {
+import { withRouter } from "react-router-dom";
+const CreateProduct = ({ history }) => {
   const [Title, setTitle] = useState("");
   const [Pname, setPname] = useState("");
   const [Category, setCategory] = useState(null);
@@ -57,11 +58,12 @@ const CreateProduct = () => {
     await axios
       .post("http://localhost:8000/api/posts/", formData, {
         headers: {
-          Authorization: User.token,
+          Authorization: `token ${User.token}`,
         },
       })
       .then((res) => {
         console.log(res);
+        history.push("/");
       });
   };
 
@@ -138,4 +140,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default withRouter(CreateProduct);
