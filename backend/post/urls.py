@@ -19,6 +19,9 @@ urlpatterns = [
 
     path('comment/<int:comment_id>/submit/', views.choices_view), # 댓글쓰기 HTTP Method (GET, PUT, POST, DELETE등등)의 행위가 URI 표현으로 들어가서는 안된다. 
     path('reply/<int:comment_id>/', views.choices_view), # 답글
+    
+
+    path('img/<int:id>/', views.CategorySearchViewSett.as_view()),
 
     # 카테고리
     path('category/', views.CategoryViewSet.as_view()),
@@ -26,7 +29,7 @@ urlpatterns = [
 
     # path('list/recent/', views.RecentPostViewSet.as_view()), # 최신데이터 목록 
     #path('img/id/', views.PostImageDetail.as_view()),          
-    #path('img/', views.PostImageSerializer.as_view()),          # 다중이미지 테스트 url  
+    # path('img', views.PostImageSerializer.as_view()),          # 다중이미지 테스트 url  
 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
