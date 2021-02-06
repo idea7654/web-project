@@ -35,6 +35,7 @@ https://github.com/encode/django-rest-framework/blob/master/rest_framework/authe
 https://m.blog.naver.com/rbdud96/221765701646
 https://www.vinta.com.br/blog/2018/django-rest-framework-read-write-serializers/
 
-
-2.3
-이름자동으로넣기 필요 (해결)
+수정
+https://www.reddit.com/r/django/comments/fck38e/django_rest_framework_createupdate_multiple/
+https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
+https://django.cowhite.com/blog/create-and-update-django-rest-framework-nested-serializers/
