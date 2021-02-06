@@ -15,7 +15,6 @@ const CarouselComponent = ({ history }) => {
     axios.get("http://localhost:8000/api/posts").then((res) => {
       setProduct(res.data);
       setBeforeRender(true);
-      console.log(res.data);
     });
   }, []);
 
