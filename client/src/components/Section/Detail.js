@@ -95,32 +95,25 @@ const Detail = ({ match }) => {
             </div>
           </div>
           <Comment info={Info} setInfo={setInfo} />
-          {User.user.id === Info.owner ? (
-            <div className="flex justify-end mb-3">
-              <a
-                onClick={handleUpdate}
-                className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
-              >
-                수정
-              </a>
-              <a className="bg-blue-500 rounded-lg font-bold text-white text-center px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
-                삭제
-              </a>
-            </div>
+          {User ? (
+            User.user.id === Info.owner ? (
+              <div className="flex justify-end mb-3">
+                <a
+                  onClick={handleUpdate}
+                  className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+                >
+                  수정
+                </a>
+                <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+                  삭제
+                </a>
+              </div>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
-          <div className="flex justify-end mb-3">
-            <a
-              onClick={handleUpdate}
-              className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
-            >
-              수정
-            </a>
-            <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
-              삭제
-            </a>
-          </div>
         </div>
       )}
     </div>

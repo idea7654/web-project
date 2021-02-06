@@ -45,26 +45,38 @@ const CreateProduct = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let formData = await new FormData();
-    for (const i in Content) {
-      if (i < Content.length) {
-        await formData.append("image", Content[i]);
+    if (Title === "") {
+      alert("제목을 작성해주세요!");
+    } else if (Pname === "") {
+      alert("제품 이름을 작성해주세요!");
+    } else if (Category === null) {
+      alert("카테고리를 골라주세요!");
+    } else if (Context === "") {
+      alert("내용을 작성해주세요!");
+    } else if (Preview.length === 0) {
+      alert("이미지를 넣어주세요!");
+    } else {
+      let formData = await new FormData();
+      for (const i in Content) {
+        if (i < Content.length) {
+          await formData.append("image", Content[i]);
+        }
       }
+      await formData.append("title", Title);
+      await formData.append("pname", Pname);
+      await formData.append("category", Category);
+      await formData.append("content", Context);
+      await axios
+        .post("http://localhost:8000/api/posts/", formData, {
+          headers: {
+            Authorization: `token ${User.token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          history.push("/");
+        });
     }
-    await formData.append("title", Title);
-    await formData.append("pname", Pname);
-    await formData.append("category", Category);
-    await formData.append("content", Context);
-    await axios
-      .post("http://localhost:8000/api/posts/", formData, {
-        headers: {
-          Authorization: `token ${User.token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        history.push("/");
-      });
   };
 
   return (
@@ -121,7 +133,7 @@ const CreateProduct = ({ history }) => {
             ? Preview.map((data) => {
                 return (
                   <div>
-                    <img src={data} alt="" />
+                    <img className="mb-3" src={data} alt="" />
                   </div>
                 );
               })
