@@ -8,7 +8,7 @@ from rest_framework.serializers import ReadOnlyField
 class PostImageSerializer(serializers.ModelSerializer):
    class Meta:
         model = PostImage
-        fields = ('post','image')
+        fields = ('image',)
 
 # 댓글 답글
 class CommentSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    images = PostImageSerializer(many=True, read_only=True)
+    #images = PostImageSerializer(many=True, read_only=True) 왜안나타나는지 이유를모름
     comments = serializers.SerializerMethodField() 
     owner_username = ReadOnlyField(source='owner.username') # 작성자 아이디표시
     img = serializers.SerializerMethodField() # 멀티이미지 표시
