@@ -136,7 +136,7 @@ const Comment = ({ info, setInfo }) => {
         ? info.comments.map((data, index) => {
             if (index < Page * PageLimit && index >= (Page - 1) * PageLimit)
               return (
-                <div>
+                <div key={index}>
                   <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
                     <div className="w-full flex flex-row justify-between mx-2">
                       <div className="flex flex-row justify-center mr-2">
@@ -181,6 +181,7 @@ const Comment = ({ info, setInfo }) => {
                   if (index < 3) {
                     return (
                       <a
+                        key={index}
                         className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0"
                         onClick={() => changePage(index + 1)}
                       >

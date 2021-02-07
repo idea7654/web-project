@@ -29,8 +29,13 @@ const Landing = ({ history }) => {
         <Product />
       </div>
       {User ? (
-        <div>
-          <a onClick={handleClick}>작성</a>
+        <div className="flex justify-end mb-3">
+          <a
+            onClick={handleClick}
+            className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+          >
+            작성
+          </a>
         </div>
       ) : (
         ""

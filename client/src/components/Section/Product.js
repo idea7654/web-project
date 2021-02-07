@@ -29,7 +29,10 @@ const Product = ({ history }) => {
           {Sales.map((data, index) => {
             if (index > Sales.length - 4) {
               return (
-                <div className="mt-3 my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                <div
+                  key={index}
+                  className="mt-3 my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                >
                   <article className="overflow-hidden rounded-lg shadow-lg">
                     <a onClick={() => handleClick(data.id)}>
                       <img

@@ -87,7 +87,10 @@ const Reply = ({ info, setShowModal, id }) => {
               {ReplyData
                 ? ReplyData.map((data, index) => {
                     return (
-                      <div className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-inner mb-4">
+                      <div
+                        key={index}
+                        className="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-inner mb-4"
+                      >
                         <div className="w-full flex flex-row justify-between mx-2">
                           <div className="flex flex-row justify-center mr-2">
                             <img

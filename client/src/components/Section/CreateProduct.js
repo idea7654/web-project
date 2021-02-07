@@ -130,10 +130,10 @@ const CreateProduct = ({ history }) => {
             multiple
           />
           {Content
-            ? Preview.map((data) => {
+            ? Preview.map((data, index) => {
                 return (
                   <div>
-                    <img className="mb-3" src={data} alt="" />
+                    <img key={index} className="mb-3" src={data} alt="" />
                   </div>
                 );
               })

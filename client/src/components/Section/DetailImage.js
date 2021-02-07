@@ -5,8 +5,14 @@ const DetailImage = ({ Images }) => {
     <div className="w-full h-full">
       <Carousel>
         {Images
-          ? Images.map((data) => {
-              return <img src={"http://localhost:8000" + data.image} alt="" />;
+          ? Images.map((data, index) => {
+              return (
+                <img
+                  key={index}
+                  src={"http://localhost:8000" + data.image}
+                  alt=""
+                />
+              );
             })
           : ""}
       </Carousel>

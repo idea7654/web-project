@@ -116,9 +116,9 @@ const Update = ({ info, setUpdateFlag }) => {
             multiple
           />
           {Content
-            ? Preview.map((data) => {
+            ? Preview.map((data, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <img src={data} alt="" />
                   </div>
                 );
