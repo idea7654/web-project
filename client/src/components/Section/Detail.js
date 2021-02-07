@@ -67,6 +67,15 @@ const Detail = ({ match }) => {
   const handleUpdate = () => {
     setUpdateFlag(true);
   };
+
+  const handleDestroy = () => {
+    axios
+      .delete(`http://localhost:8000/api/posts/${match.params.id}`)
+      .then((res) => {
+        console.log(res);
+        //history.push('/');
+      });
+  };
   return (
     <div>
       {UpdateFlag ? (
@@ -104,7 +113,10 @@ const Detail = ({ match }) => {
                 >
                   수정
                 </a>
-                <a className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600">
+                <a
+                  onClick={handleDestroy}
+                  className="bg-blue-500 rounded-lg font-bold text-white text-center mr-3 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+                >
                   삭제
                 </a>
               </div>
