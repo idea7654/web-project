@@ -27,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    #images = PostImageSerializer(many=True, read_only=True) 왜안나타나는지 이유를모름
+    imgkey = PostImageSerializer(many=True, required=False)
     comments = serializers.SerializerMethodField() 
     owner_username = ReadOnlyField(source='owner.username') # 작성자 아이디표시
     img = serializers.SerializerMethodField() # 멀티이미지 표시
@@ -54,7 +54,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'pname',
             'content',
-            # 'images',
+            'imgkey',
             'imgurl',
             'cdate',
             'star',
@@ -82,6 +82,17 @@ class PostSerializer(serializers.ModelSerializer):
            PostImage.objects.create(post=post, image=image_data)
        return post
 
+    def update(self, instance, validated_data):
+        albums_data = validated_data.pop('imgkey')
+        albums = (instance.imgkey).all()
+        albums = list(albums)
+        instance.save()
+
+        for album_data in albums_data:
+            album = albums.pop(0)
+            album.image = album_data.get('image', album.image)
+            album.save()
+        return instance
 
 # 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
 class CommentlistSerializer(serializers.ModelSerializer):
