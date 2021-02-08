@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'knox',
     'api',
     'imagekit',
-
+    'django_cleanup',
 ]
 
 REST_FRAMEWORK = {
