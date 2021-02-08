@@ -27,11 +27,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    imgkey = PostImageSerializer(many=True, required=False)
+    img = PostImageSerializer(many=True, required=False)
     comments = serializers.SerializerMethodField() 
     owner_username = ReadOnlyField(source='owner.username') # 작성자 아이디표시
-    img = serializers.SerializerMethodField() # 멀티이미지 표시
     star = serializers.SerializerMethodField('scoresAverage') #댓글 별점 평균
+    #img = serializers.SerializerMethodField() # 멀티이미지 표시
 
     # 댓글 평균
     def scoresAverage(self, obj):
@@ -54,8 +54,6 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'pname',
             'content',
-            'imgkey',
-            'imgurl',
             'cdate',
             'star',
             'owner_username',
@@ -63,10 +61,6 @@ class PostSerializer(serializers.ModelSerializer):
             'comments',
         )
 
-    def get_img(self, obj):
-        parent_comments = obj.imgkey.all()
-        serializer = PostImageSerializer(parent_comments, many=True)
-        return serializer.data
         
     # 코멘트목록 답글 중복을없애기위해 parent=None 으로 설정
     def get_comments(self, obj):
@@ -83,8 +77,8 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
     def update(self, instance, validated_data):
-        albums_data = validated_data.pop('imgkey')
-        albums = (instance.imgkey).all()
+        albums_data = validated_data.pop('img')
+        albums = (instance.img).all()
         albums = list(albums)
         instance.save()
 
@@ -93,6 +87,12 @@ class PostSerializer(serializers.ModelSerializer):
             album.image = album_data.get('image', album.image)
             album.save()
         return instance
+    
+    # # 멀티이미지 삽질 ver. related_name='img'
+    # def get_img(self, obj):
+    #     parent_comments = obj.imgkey.all()
+    #     serializer = PostImageSerializer(parent_comments, many=True)
+    #     return serializer.data
 
 # 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
 class CommentlistSerializer(serializers.ModelSerializer):
