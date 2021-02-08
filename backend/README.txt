@@ -39,3 +39,4 @@ https://www.vinta.com.br/blog/2018/django-rest-framework-read-write-serializers/
 https://www.reddit.com/r/django/comments/fck38e/django_rest_framework_createupdate_multiple/
 https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
 https://django.cowhite.com/blog/create-and-update-django-rest-framework-nested-serializers/
+https://gist.github.com/toransahu/221371c981c20f0b9c645019a53b90c7

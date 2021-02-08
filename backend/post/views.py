@@ -39,7 +39,6 @@ class PostViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
 # 카테고리 설정
 class CategoryViewSet(APIView):
     def get(self, request, format=None):

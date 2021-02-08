@@ -22,7 +22,7 @@ class Post(models.Model):
         return self.title
 
 class PostImage(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='imgkey')        # 게시글 이미지매칭 키
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='img')        # 게시글 이미지매칭 키
     image = models.ImageField(blank=True, null=True)            # 이미지
     parents = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE, null=True, blank=True)
 
