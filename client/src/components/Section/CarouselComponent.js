@@ -8,55 +8,29 @@ const CarouselComponent = ({ history }) => {
     history.push(`/detail/${id}`);
   };
 
-  const [Product, setProduct] = useState([]);
-  const [BeforeRender, setBeforeRender] = useState(false);
+  const [Product, setProduct] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/posts").then((res) => {
       setProduct(res.data);
-      setBeforeRender(true);
     });
   }, []);
 
   const Product1 = (
     <div onClick={() => handleClick(Product[Product.length - 1].id)}>
-      {BeforeRender ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 1].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 1].img[0].image} /> : ""}
     </div>
   );
 
   const Product2 = (
     <div onClick={() => handleClick(Product[Product.length - 2].id)}>
-      {BeforeRender ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 2].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 2].img[0].image} /> : ""}
     </div>
   );
 
   const Product3 = (
     <div onClick={() => handleClick(Product[Product.length - 3].id)}>
-      {BeforeRender ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 3].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 3].img[0].image} /> : ""}
     </div>
   );
   return (
