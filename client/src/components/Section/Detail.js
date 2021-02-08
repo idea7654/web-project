@@ -7,7 +7,7 @@ import DetailImage from "./DetailImage";
 import Update from "./Update";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
-const Detail = ({ match }) => {
+const Detail = ({ match, history }) => {
   const [Info, setInfo] = useState({
     pname: "",
     content: "",
@@ -69,11 +69,15 @@ const Detail = ({ match }) => {
   };
 
   const handleDestroy = () => {
+    const token = `token ${User.token}`;
     axios
-      .delete(`http://localhost:8000/api/posts/${match.params.id}`)
+      .delete(`http://localhost:8000/api/posts/${match.params.id}/`, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((res) => {
-        console.log(res);
-        //history.push('/');
+        history.push("/");
       });
   };
   return (
