@@ -18,43 +18,19 @@ const CarouselComponent = ({ history }) => {
 
   const Product1 = (
     <div onClick={() => handleClick(Product[Product.length - 1].id)}>
-      {Product ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 1].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 1].img[0].image} /> : ""}
     </div>
   );
 
   const Product2 = (
     <div onClick={() => handleClick(Product[Product.length - 2].id)}>
-      {Product ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 2].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 2].img[0].image} /> : ""}
     </div>
   );
 
   const Product3 = (
     <div onClick={() => handleClick(Product[Product.length - 3].id)}>
-      {Product ? (
-        <img
-          src={
-            "http://localhost:8000" + Product[Product.length - 3].img[0].image
-          }
-        />
-      ) : (
-        ""
-      )}
+      {Product ? <img src={Product[Product.length - 3].img[0].image} /> : ""}
     </div>
   );
   return (
