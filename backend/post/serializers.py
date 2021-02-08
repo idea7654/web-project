@@ -54,7 +54,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'pname',
             'content',
-            'images',
+            # 'images',
             'imgurl',
             'cdate',
             'star',
