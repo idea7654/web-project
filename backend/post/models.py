@@ -33,9 +33,19 @@ class Comment(models.Model):
     comment_date = models.DateTimeField('date published', default=timezone.now)
     cstar = models.PositiveSmallIntegerField(default=5, null=False) 
     parent = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE, null=True, blank=True)
-    
+    upUser = models.ManyToManyField(User, blank=True, related_name="upUser", through="Like", through_fields=('comment','user'))
+    downUser = models.ManyToManyField(User, blank=True, related_name="downUser", through="Dislike", through_fields=('comment','user'))
+
     class Meta:
         ordering = ['-id']
             
     def __str__(self):
         return '%s - %s' % (self.comment_user, self.comment_text) 
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+class DisLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)

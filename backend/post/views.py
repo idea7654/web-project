@@ -9,8 +9,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
-from .models import Post, PostImage, Category, Comment
+from .models import Post, PostImage, Category, Comment, Like, DisLike
 from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
+
 
 
 # 검색전용? 밑에 포스트뷰랑 합체시도바람
@@ -70,8 +71,37 @@ class CategorySearchViewSett(APIView):
         serializer = PostImageSerializer(queryset, many=True)
         return Response(serializer.data)
 
-   
-        
+class Recommand(APIView):
+    def post(self, request, id, format=None):
+        post = Comment.objects.get(id=id)
+        if request.data['recommand']=="up":
+            if post.upUser.values().filter(username=request.user.username):
+                recommanded = Like.objects.filter(comment=post, user=request.user)
+                recommanded.delete()
+            else:
+                if DisLike.objects.filter(comment=post, user=request.user):
+                    DisLike.objects.filter(comment=post, user=request.user).delete()
+                else:
+                    pass
+                Like.objects.create(comment=post, user=request.user)
+        if request.data['recommand']=="down":
+            if post.downUser.values().filter(username=request.user.username):
+                recommanded = DisLike.objects.filter(comment=post, user=request.user)
+                recommanded.delete()
+            else:
+                if Like.objects.filter(comment=post, user=request.user):
+                    Like.objects.filter(comment=post, user=request.user).delete()
+                else:
+                    pass
+                DisLike.objects.create(comment=post, user=request.user)
+
+        Like_count = Like.objects.values().filter(comment = post).count()
+        DisLike_count = DisLike.objects.values().filter(comment = post).count()
+        post.like_total = Like_count - DisLike_count
+        post.save()
+        return Response(post.like_total)
+
+
 # # 다중이미지 
 # class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):
 #     queryset = Post.objects.all()

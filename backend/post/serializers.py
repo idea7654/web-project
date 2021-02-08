@@ -80,6 +80,9 @@ class PostSerializer(serializers.ModelSerializer):
         albums_data = validated_data.pop('img')
         albums = (instance.img).all()
         albums = list(albums)
+        instance.title = validated_data.get('title', instance.title)
+        instance.content = validated_data.get('content', instance.content)
+        instance.pname = validated_data.get('pname', instance.pname)
         instance.save()
 
         for album_data in albums_data:
