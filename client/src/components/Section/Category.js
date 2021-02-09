@@ -1,9 +1,8 @@
 import React from "react";
-import axios from "axios";
 import { withRouter, Route } from "react-router-dom";
 import CategoryList from "./CategoryList";
 import Categories from "./Categories";
-const Category = ({ history, match }) => {
+const Category = ({ match }) => {
   return (
     <div>
       <Route exact path={match.path} render={() => <Categories />} />

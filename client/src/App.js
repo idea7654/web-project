@@ -12,6 +12,7 @@ import { UserContext } from "./context/context";
 import axios from "axios";
 import Help from "./components/Section/Help";
 import CreateProduct from "./components/Section/CreateProduct";
+import Brand from "./components/Section/Brand";
 const App = () => {
   const [User, setUser] = useState("");
 
@@ -51,6 +52,7 @@ const App = () => {
         />
         <Route path="/help" render={() => <Help />} />
         <Route path="/create" render={() => <CreateProduct />} />
+        <Route path="/brand" render={(match) => <Brand match={match} />} />
         <Footer />
       </UserContext.Provider>
     </div>

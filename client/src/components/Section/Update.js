@@ -44,6 +44,7 @@ const Update = ({ info, setUpdateFlag }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = `token ${User.token}`;
     let formData = await new FormData();
     for (const i in Content) {
       if (i < Content.length) {
@@ -54,10 +55,17 @@ const Update = ({ info, setUpdateFlag }) => {
     await formData.append("pname", Pname);
     await formData.append("category", Category);
     await formData.append("content", Context);
+    let body = {
+      title: Title,
+      pname: Pname,
+      category: Category,
+      content: Context,
+      img: [{ image: null }, { image: null }],
+    };
     await axios
-      .post("http://localhost:8000/api/posts/", formData, {
+      .put(`http://localhost:8000/api/posts/${info.id}/`, body, {
         headers: {
-          Authorization: User.token,
+          Authorization: token,
         },
       })
       .then((res) => {
