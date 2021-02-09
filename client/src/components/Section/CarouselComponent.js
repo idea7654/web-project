@@ -13,6 +13,7 @@ const CarouselComponent = ({ history }) => {
   useEffect(() => {
     axios.get("http://localhost:8000/api/posts").then((res) => {
       setProduct(res.data);
+      console.log(res.data);
     });
   }, []);
 

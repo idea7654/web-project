@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import Dropdown from "./Dropdown";
 import axios from "axios";
 import { UserContext } from "../../context/context";
-const Update = ({ info, setUpdateFlag }) => {
+import { withRouter } from "react-router-dom";
+const Update = ({ info, setUpdateFlag, history }) => {
   const [Title, setTitle] = useState(info.title);
   const [Pname, setPname] = useState(info.pname);
   const [Category, setCategory] = useState(null);
@@ -48,28 +49,22 @@ const Update = ({ info, setUpdateFlag }) => {
     let formData = await new FormData();
     for (const i in Content) {
       if (i < Content.length) {
-        await formData.append("image", Content[i]);
+        await formData.append("img", Content[i]);
       }
     }
     await formData.append("title", Title);
     await formData.append("pname", Pname);
     await formData.append("category", Category);
     await formData.append("content", Context);
-    let body = {
-      title: Title,
-      pname: Pname,
-      category: Category,
-      content: Context,
-      img: [{ image: null }, { image: null }],
-    };
     await axios
-      .put(`http://localhost:8000/api/posts/${info.id}/`, body, {
+      .put(`http://localhost:8000/api/posts/${info.id}/`, formData, {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
         console.log(res);
+        history.push("/");
       });
   };
 
@@ -152,4 +147,4 @@ const Update = ({ info, setUpdateFlag }) => {
   );
 };
 
-export default Update;
+export default withRouter(Update);
