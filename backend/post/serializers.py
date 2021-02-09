@@ -77,18 +77,43 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
     def update(self, instance, validated_data):
-        albums_data = validated_data.pop('img')
-        albums = (instance.img).all()
-        albums = list(albums)
+        """
+        Handle writable nested serializer to update the current post.
+        :param instance: current Post model instance
+        :param validated_data: validated data, by serializer class's validate method
+        :return: updated Post model instance
+        """
+        # TODO: change the definition to make it work same as create()
+
+        '''
+        overwrite post instance fields with new data if not None, else assign the old value
+        '''
         instance.title = validated_data.get('title', instance.title)
         instance.content = validated_data.get('content', instance.content)
         instance.pname = validated_data.get('pname', instance.pname)
-        instance.save()
+        # instance.updated_at = validated_data.get('updated_at', instance.updated_at)  # no need to update; auto_now;
 
-        for album_data in albums_data:
-            album = albums.pop(0)
-            album.image = album_data.get('image', album.image)
-            album.save()
+        try:
+
+            '''
+            Fetching `images` list of image files explicitly from context.
+            Because using default way, value of `images` received at serializers from viewset was an empty list.
+            However value of `images` in viewset were OK.
+            Hence applied this workaround.   
+            '''
+            images_data = self.context.get('request').data.pop('img')
+        except:
+            images_data = None
+
+        if images_data is not None:
+            image_instance_list = []
+            for image_data in images_data:
+                image, created = PostImage.objects.get_or_create(image=image_data)
+                image_instance_list.append(image)
+
+            instance.img.set(image_instance_list)
+
+        instance.save()  # why? see base class code; need to save() to make auto_now work
         return instance
     
     # # 멀티이미지 삽질 ver. related_name='img'
