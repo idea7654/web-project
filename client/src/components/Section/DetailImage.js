@@ -6,13 +6,7 @@ const DetailImage = ({ Images }) => {
       <Carousel>
         {Images
           ? Images.map((data, index) => {
-              return (
-                <img
-                  key={index}
-                  src={"http://localhost:8000" + data.image}
-                  alt=""
-                />
-              );
+              return <img key={index} src={data.image} alt="" />;
             })
           : ""}
       </Carousel>
