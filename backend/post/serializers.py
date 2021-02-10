@@ -13,11 +13,25 @@ class PostImageSerializer(serializers.ModelSerializer):
 # 댓글 답글
 class CommentSerializer(serializers.ModelSerializer):
     reply = serializers.SerializerMethodField()
+    up = serializers.SerializerMethodField()
+    down = serializers.SerializerMethodField()
     username = ReadOnlyField(source='comment_user.username')
+    total = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
         fields = '__all__'
+
+    def get_up(self, obj):
+        return obj.upUser.count()
+
+    def get_down(self, obj):
+        return obj.downUser.count()
+    
+    # 모델로 넣거나 리팩토링 필요해보임 
+    def get_total(self, obj):
+        result = obj.upUser.count() - obj.downUser.count()
+        return result
 
     def get_reply(self, instance):
     	# recursive
