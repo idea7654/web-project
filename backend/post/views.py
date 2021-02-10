@@ -64,30 +64,6 @@ def choices_view(request, comment_id):
         return Response(CommentlistSerializer(comment).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class CategorySearchViewSett(APIView):
-    def get(self, request, id, format=None):
-        queryset = PostImage.objects.filter(post_id=id)
-        serializer = PostImageSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-# 삭제까지됨 수정은 따로 리스트 시리얼만들어야댐
-@api_view(['GET','PUT','DELETE'])
-def post_detail(request, id):
-    post = PostImage.objects.filter(post_id=id)
-    if request.method == 'GET':
-        serializer = PostImageSerializer(post, many=True)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = PostImageSerializer(post, data=request.data, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 class Recommand(APIView):
     def post(self, request, id, format=None):
         post = Comment.objects.get(id=id)

@@ -17,6 +17,8 @@ class CommentSerializer(serializers.ModelSerializer):
     down = serializers.SerializerMethodField()
     username = ReadOnlyField(source='comment_user.username')
     total = serializers.SerializerMethodField()
+    replyc = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Comment
@@ -38,6 +40,9 @@ class CommentSerializer(serializers.ModelSerializer):
         serializer = self.__class__(instance.reply, many=True)
         serializer.bind('', self)
         return serializer.data
+
+    def get_replyc(self, obj):
+        return obj.reply.count()
 
 
 class PostSerializer(serializers.ModelSerializer):

@@ -22,8 +22,6 @@ urlpatterns = [
     
     url(r'^comment/(?P<id>\d+)/recommand/$', views.Recommand.as_view(), name="postrecommand"),
 
-    path('img/<int:id>/', views.CategorySearchViewSett.as_view()),
-
     # 카테고리
     path('category/', views.CategoryViewSet.as_view()),
     url(r'^category/(?P<id>\d+)/$', views.CategorySearchViewSet.as_view()), # 카테고리별 목록
