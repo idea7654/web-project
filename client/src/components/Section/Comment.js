@@ -151,7 +151,7 @@ const Comment = ({ info, setInfo }) => {
                           {data.comment_user}
                         </h3>
                       </div>
-                      <GoodBad />
+                      <GoodBad id={data.id} />
                     </div>
 
                     <p

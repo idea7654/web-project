@@ -1,33 +1,49 @@
-import React, { useState } from "react";
-
-const GoodBad = () => {
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { UserContext } from "../../context/context";
+const GoodBad = ({ id }) => {
   const [Good, setGood] = useState(false);
-  //const [Bad, setBad] = useState(false);
-  const [GoodColor, setGoodColor] = useState("gray");
-
-  const handleGood = () => {
-    setGood(!Good);
-    if (Good) {
-      setGoodColor("red");
-    } else {
-      setGoodColor("gray");
-    }
+  const [User, setUser] = useContext(UserContext);
+  const handleGood = async () => {
+    let formData = await new FormData();
+    await setGood(!Good);
+    await formData.append("recommand", "up");
+    const token = await `token ${User.token}`;
+    await axios
+      .post(`http://localhost:8000/api/comment/${id}/recommand/`, formData, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
 
-  const handleBad = () => {
-    //setBad(!Bad);
-  };
+  const handleBad = () => {};
   return (
     <div className="flex flex-row mt-2">
-      <img
-        onClick={handleGood}
-        className="w-6 h-6 mr-4"
-        src="/good.png"
-        alt=""
-        style={{
-          filter: `opacity(.4) drop-shadow(0 0 0 ${GoodColor})`,
-        }}
-      />
+      {Good ? (
+        <img
+          onClick={handleGood}
+          className="w-6 h-6 mr-4"
+          src="/good.png"
+          alt=""
+          style={{
+            filter: `opacity(.4) drop-shadow(0 0 0 red)`,
+          }}
+        />
+      ) : (
+        <img
+          onClick={handleGood}
+          className="w-6 h-6 mr-4"
+          src="/good.png"
+          alt=""
+          style={{
+            filter: `opacity(.4) drop-shadow(0 0 0 gray)`,
+          }}
+        />
+      )}
       <img
         style={{ filter: "opacity(.4) drop-shadow(0 0 0 gray)" }}
         onClick={handleBad}
