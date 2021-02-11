@@ -68,7 +68,7 @@ const Comment = ({ info, setInfo }) => {
   };
 
   const handleNext = () => {
-    if (Page < 3) {
+    if (Page < 3 && info.comments.length / 5 > Page) {
       setPage(Page + 1);
     }
   };
@@ -151,9 +151,8 @@ const Comment = ({ info, setInfo }) => {
                           {data.comment_user}
                         </h3>
                       </div>
-                      <GoodBad id={data.id} />
+                      <GoodBad data={data} />
                     </div>
-
                     <p
                       style={{ width: "90%" }}
                       className="text-gray-600 text-lg text-center md:text-left "

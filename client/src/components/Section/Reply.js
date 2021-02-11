@@ -67,7 +67,7 @@ const Reply = ({ info, setShowModal, id }) => {
                       {info.comment_user}
                     </h3>
                   </div>
-                  <GoodBad />
+                  {/* <GoodBad /> */}
                 </div>
 
                 <p
