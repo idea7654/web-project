@@ -9,8 +9,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
-from .models import Post, PostImage, Category, Comment, Like, DisLike
-from .serializers import CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
+from .models import Brand, Post, PostImage, Category, Comment, Like, DisLike
+from .serializers import BrandSerializer, CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
 
 
 
@@ -46,11 +46,23 @@ class CategoryViewSet(APIView):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
+
+class BrandViewSet(APIView):
+    def get(self, request, format=None):
+        queryset = Brand.objects.all()
+        serializer = BrandSerializer(queryset, many=True)
+        return Response(serializer.data)
         
 # 카테고리별 목록
 class CategorySearchViewSet(APIView):
     def get(self, request, id, format=None):
         queryset = Post.objects.filter(category__id=id)
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class BrandSearchViewSet(APIView):
+    def get(self, request, id, format=None):
+        queryset = Post.objects.filter(brand__id=id)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
 
