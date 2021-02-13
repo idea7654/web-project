@@ -26,6 +26,8 @@ urlpatterns = [
     path('category/', views.CategoryViewSet.as_view()),
     url(r'^category/(?P<id>\d+)/$', views.CategorySearchViewSet.as_view()), # 카테고리별 목록
 
+    path('brand/', views.BrandViewSet.as_view()),
+    url(r'^brand/(?P<id>\d+)/$', views.BrandSearchViewSet.as_view()),
     # path('list/recent/', views.RecentPostViewSet.as_view()), # 최신데이터 목록 
     #path('img/id/', views.PostImageDetail.as_view()),          
     # path('img', views.PostImageSerializer.as_view()),          # 다중이미지 테스트 url  

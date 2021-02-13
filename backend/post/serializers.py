@@ -1,7 +1,7 @@
 
 from django.utils import timezone
 from rest_framework import serializers
-from .models import Post, PostImage, Category, Comment
+from .models import Brand, Post, PostImage, Category, Comment
 from rest_framework.serializers import ReadOnlyField
 
 # 다중이미지 
@@ -17,7 +17,7 @@ class CommentSerializer(serializers.ModelSerializer):
     down = serializers.SerializerMethodField()
     username = ReadOnlyField(source='comment_user.username')
     total = serializers.SerializerMethodField()
-    replyc = serializers.SerializerMethodField()
+    
 
 
     class Meta:
@@ -40,9 +40,6 @@ class CommentSerializer(serializers.ModelSerializer):
         serializer = self.__class__(instance.reply, many=True)
         serializer.bind('', self)
         return serializer.data
-
-    def get_replyc(self, obj):
-        return obj.reply.count()
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -78,6 +75,7 @@ class PostSerializer(serializers.ModelSerializer):
             'owner_username',
             'img',
             'comments',
+            'brand',
         )
 
         
@@ -96,30 +94,12 @@ class PostSerializer(serializers.ModelSerializer):
        return post
 
     def update(self, instance, validated_data):
-        """
-        Handle writable nested serializer to update the current post.
-        :param instance: current Post model instance
-        :param validated_data: validated data, by serializer class's validate method
-        :return: updated Post model instance
-        """
-        # TODO: change the definition to make it work same as create()
-
-        '''
-        overwrite post instance fields with new data if not None, else assign the old value
-        '''
+       
         instance.title = validated_data.get('title', instance.title)
         instance.content = validated_data.get('content', instance.content)
         instance.pname = validated_data.get('pname', instance.pname)
-        # instance.updated_at = validated_data.get('updated_at', instance.updated_at)  # no need to update; auto_now;
 
         try:
-
-            '''
-            Fetching `images` list of image files explicitly from context.
-            Because using default way, value of `images` received at serializers from viewset was an empty list.
-            However value of `images` in viewset were OK.
-            Hence applied this workaround.   
-            '''
             images_data = self.context.get('request').data.pop('img')
         except:
             images_data = None
@@ -132,7 +112,7 @@ class PostSerializer(serializers.ModelSerializer):
 
             instance.img.set(image_instance_list)
 
-        instance.save()  # why? see base class code; need to save() to make auto_now work
+        instance.save()  
         return instance
     
     # # 멀티이미지 삽질 ver. related_name='img'
@@ -154,6 +134,11 @@ class CommentlistSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
+        fields = '__all__'
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
         fields = '__all__'
         
 

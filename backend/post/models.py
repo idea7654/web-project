@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+class Brand(models.Model):
+    name = models.CharField(max_length=40, null=False)
+
+    def __str__(self):
+        return self.name
+
 class Category(models.Model):
     name = models.CharField(max_length=40, null=False)
 
@@ -16,6 +22,7 @@ class Post(models.Model):
     cdate = models.DateTimeField(default=timezone.now)             # 업로드날짜
     imgurl = models.ImageField(blank=True, null=True)           # 대표이미지
     category = models.ForeignKey(Category, null=False, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         """A string representation of the model."""
