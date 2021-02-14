@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 const GoodBad = ({ data }) => {
-  console.log(data);
   const [Good, setGood] = useState(false);
   const [Bad, setBad] = useState(false);
   const [User, setUser] = useContext(UserContext);
@@ -108,7 +107,7 @@ const GoodBad = ({ data }) => {
         alt=""
       />
       <img className="w-6 h-6 mr-2" src="/comment.png" />
-      <div className="mr-2">{data ? data.reply.length : 0}</div>
+      <div className="mr-2">{data.reply ? data.reply.length : 0}</div>
     </div>
   );
 };

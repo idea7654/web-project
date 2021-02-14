@@ -26,6 +26,7 @@ const Comment = ({ info, setInfo }) => {
     setReview(index);
   };
   const handleChange = (e) => {
+    e.preventDefault();
     setComment(e.target.value);
   };
   const handlePost = () => {
@@ -36,7 +37,7 @@ const Comment = ({ info, setInfo }) => {
         cstar: Review,
       };
       axios
-        .post(`http://localhost:8000/api/comment/${info.id}/submit/`, body)
+        .post(`http://localhost:8000/api/comment/${info.id}/`, body)
         .then(async (res) => {
           await axios
             .get("http://localhost:8000/api/auth/user/list")

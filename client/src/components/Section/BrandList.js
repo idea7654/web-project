@@ -10,7 +10,6 @@ const BrandList = ({ history, match }) => {
     axios
       .get(`http://localhost:8000/api/brand/${match.params.id}/`)
       .then((res) => {
-        console.log(res);
         setProList(res.data);
       });
   }, []);
