@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
 from .models import Brand, Post, PostImage, Category, Comment, Like, DisLike
-from .serializers import BrandSerializer, CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
+from .serializers import BrandSerializer, CommentSerializer, CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
 
 
 
@@ -75,6 +75,11 @@ def choices_view(request, comment_id):
         comment = serializer.save(comment=post)
         return Response(CommentlistSerializer(comment).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
 
 class Recommand(APIView):
     def post(self, request, id, format=None):

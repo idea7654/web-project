@@ -17,7 +17,8 @@ urlpatterns = [
     path('list/', views.ListPost.as_view()), # 글목록
     path('list/<int:pk>/', views.DetailPost.as_view()), # 글내용
 
-    path('comment/<int:comment_id>/', views.choices_view), # 댓글쓰기 HTTP Method (GET, PUT, POST, DELETE등등)의 행위가 URI 표현으로 들어가서는 안된다. 
+    path('comment/<int:comment_id>/', views.choices_view), # 댓글쓰기
+    path('comments/<int:pk>/', views.CommentDetail.as_view()), # 수정
     path('reply/<int:comment_id>/', views.choices_view), # 답글
     
     url(r'^comment/(?P<id>\d+)/recommand/$', views.Recommand.as_view(), name="postrecommand"),
