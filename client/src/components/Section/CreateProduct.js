@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Dropdown from "./Dropdown";
+import DropdownBrand from "./DropdownBrand";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
@@ -10,6 +11,7 @@ const CreateProduct = ({ history }) => {
   const [Context, setContext] = useState("");
   const [Content, setContent] = useState([]);
   const [Preview, setPreview] = useState([]);
+  const [Brand, setBrand] = useState(null);
   const [User, setUser] = useContext(UserContext);
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -109,6 +111,10 @@ const CreateProduct = ({ history }) => {
             setCategory={setCategory}
             color="white"
           />
+        </div>
+        <div>
+          <div className="mb-3">브랜드</div>
+          <DropdownBrand Brand={Brand} setBrand={setBrand} color="white" />
         </div>
         <div>
           <div className="mb-3">제품 정보</div>

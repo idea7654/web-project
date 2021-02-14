@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Dropdown from "./Dropdown";
+import DropdownBrand from "./DropdownBrand";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
@@ -7,6 +8,7 @@ const Update = ({ info, setUpdateFlag, history }) => {
   const [Title, setTitle] = useState(info.title);
   const [Pname, setPname] = useState(info.pname);
   const [Category, setCategory] = useState(null);
+  const [Brand, setBrand] = useState(null);
   const [Context, setContext] = useState(info.content);
   const [Content, setContent] = useState([]);
   const [Preview, setPreview] = useState([]);
@@ -98,6 +100,10 @@ const Update = ({ info, setUpdateFlag, history }) => {
             setCategory={setCategory}
             color="white"
           />
+        </div>
+        <div>
+          <div className="mb-3">브랜드</div>
+          <DropdownBrand Brand={Brand} setBrand={setBrand} color="white" />
         </div>
         <div>
           <div className="mb-3">제품 정보</div>

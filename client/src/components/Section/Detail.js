@@ -95,7 +95,7 @@ const Detail = ({ match, history }) => {
                   <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                     {Info.pname}
                   </h1>
-                  <Ar />
+                  {Info.title === "chair" ? <Ar product={Info.title} /> : ""}
                 </div>
                 <div className="flex mb-4">
                   <span className="flex items-center">

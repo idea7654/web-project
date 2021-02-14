@@ -9,6 +9,7 @@ const Brands = ({ history }) => {
   useEffect(() => {
     axios.get("http://localhost:8000/api/brand/").then((res) => {
       setBrandList(res.data);
+      console.log(res);
     });
   }, []);
   return (
