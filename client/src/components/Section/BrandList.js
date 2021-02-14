@@ -7,11 +7,12 @@ const BrandList = ({ history, match }) => {
     history.push(`/detail/${id}`);
   };
   useEffect(() => {
-    // axios
-    //   .get(`http://localhost:8000/api/category/${match.params.id}`)
-    //   .then((res) => {
-    //     setProList(res.data);
-    //   });
+    axios
+      .get(`http://localhost:8000/api/brand/${match.params.id}/`)
+      .then((res) => {
+        console.log(res);
+        setProList(res.data);
+      });
   }, []);
   return (
     <div>
