@@ -25,7 +25,7 @@ const DropdownBrand = ({ Brand, setBrand }) => {
   };
   return (
     <div>
-      <div className="dropdown inline-block relative mb-3">
+      <div className="dropdown inline-block relative mb-3 z-0">
         <button
           onClick={() => setDropVisible(!DropVisible)}
           className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
@@ -33,7 +33,7 @@ const DropdownBrand = ({ Brand, setBrand }) => {
           <span>{Brand ? TextBrand : "Brand"}</span>
         </button>
         {DropVisible ? (
-          <ul className="absolute text-gray-700 pt-1">
+          <ul className="absolute text-gray-700 pt-1 z-1">
             <li>
               <a
                 onClick={() => handleBrand(1)}

@@ -25,7 +25,7 @@ const Dropdown = ({ Category, setCategory }) => {
   };
   return (
     <div>
-      <div className="dropdown inline-block relative mb-3">
+      <div className="dropdown inline-block relative mb-3 z-10">
         <button
           onClick={() => setDropVisible(!DropVisible)}
           className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"

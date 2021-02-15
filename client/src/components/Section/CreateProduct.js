@@ -4,26 +4,18 @@ import DropdownBrand from "./DropdownBrand";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
+import useInputs from "../../hooks/useInputs";
 const CreateProduct = ({ history }) => {
-  const [Title, setTitle] = useState("");
-  const [Pname, setPname] = useState("");
   const [Category, setCategory] = useState(null);
-  const [Context, setContext] = useState("");
   const [Content, setContent] = useState([]);
   const [Preview, setPreview] = useState([]);
   const [Brand, setBrand] = useState(null);
   const [User, setUser] = useContext(UserContext);
-  const titleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const pnameChange = (e) => {
-    setPname(e.target.value);
-  };
-
-  const contextChange = (e) => {
-    setContext(e.target.value);
-  };
+  const [{ Title, Pname, Context }, onChange, reset] = useInputs({
+    Title: "",
+    Pname: "",
+    Context: "",
+  });
 
   const imageChange = (e) => {
     e.preventDefault();
@@ -87,8 +79,9 @@ const CreateProduct = ({ history }) => {
         <div>
           <div className="mb-3">제목</div>
           <input
+            name="Title"
             value={Title}
-            onChange={titleChange}
+            onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
             placeholder="제목을 입력해주세요"
@@ -97,8 +90,9 @@ const CreateProduct = ({ history }) => {
         <div>
           <div className="mb-3">제품 이름</div>
           <input
+            name="Pname"
             value={Pname}
-            onChange={pnameChange}
+            onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
             placeholder="제품 이름을 입력해주세요"
@@ -119,8 +113,9 @@ const CreateProduct = ({ history }) => {
         <div>
           <div className="mb-3">제품 정보</div>
           <textarea
+            name="Context"
             value={Context}
-            onChange={contextChange}
+            onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
             placeholder="제품 정보를 입력해주세요"
