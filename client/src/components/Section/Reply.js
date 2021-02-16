@@ -5,7 +5,7 @@ import { UserContext } from "../../context/context";
 const Reply = ({ info, setShowModal, id }) => {
   const [Value, setValue] = useState("");
   const [User, setUser] = useContext(UserContext);
-  const [ReplyData, setReplyData] = useState("");
+  const [ReplyData, setReplyData] = useState([]);
   const handlePost = () => {
     //axios.post();
     if (User) {
@@ -44,7 +44,8 @@ const Reply = ({ info, setShowModal, id }) => {
 
   useEffect(() => {
     setReplyData(info.reply);
-  }, []);
+    console.log(info);
+  }, [info]);
   return (
     <div>
       <div className="w-full px-3 pt-10 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

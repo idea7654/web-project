@@ -53,6 +53,7 @@ const Comment = ({ info, setInfo }) => {
             ...info,
             comments: [res.data, ...info.comments],
           });
+          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
