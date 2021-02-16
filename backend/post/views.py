@@ -10,23 +10,8 @@ from rest_framework.views import APIView
 
 from .permissions import IsAuthorOrReadonly, IsAuthenticated
 from .models import Brand, Post, PostImage, Category, Comment, Like, DisLike
-from .serializers import BrandSerializer, CommentSerializer, CommentlistSerializer, PostSerializer, CategorySerializer, PostImageSerializer
+from .serializers import BrandSerializer, CommentSerializer, PostSerializer, CategorySerializer, PostImageSerializer
 
-
-
-# 검색전용? 밑에 포스트뷰랑 합체시도바람
-class ListPost(generics.ListAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-    # 필터검색  DBMS 의 LIKE/ILIKE 조건절을 통해 검색 
-    filter_backends = [SearchFilter]
-    search_fields = ['title','content','pname']
-
-#  조회 수정 삭제 포스트뷰셋이랑겹침 
-class DetailPost(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
 
 # 비회원 모든 게시글및 댓글조회 회원 수정삭제
 class PostViewSet(ModelViewSet):
@@ -36,6 +21,10 @@ class PostViewSet(ModelViewSet):
     permission_classes = [
         IsAuthorOrReadonly,
     ]
+
+    # 필터검색  DBMS 의 LIKE/ILIKE 조건절을 통해 검색 
+    filter_backends = [SearchFilter]
+    search_fields = ['title','content','pname']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -70,10 +59,10 @@ class BrandSearchViewSet(APIView):
 @api_view(['POST'])
 def choices_view(request, comment_id):
     post = get_object_or_404(Post, pk=comment_id)
-    serializer = CommentlistSerializer(data=request.data)
+    serializer = CommentSerializer(data=request.data)
     if serializer.is_valid():
         comment = serializer.save(comment=post)
-        return Response(CommentlistSerializer(comment).data, status=status.HTTP_201_CREATED)
+        return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -115,6 +104,21 @@ class Recommand(APIView):
         post.save()
         return Response(post.like_total)
 
+
+
+# # 검색전용? 밑에 포스트뷰랑 합체시도바람
+# class ListPost(generics.ListAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+
+#     # 필터검색  DBMS 의 LIKE/ILIKE 조건절을 통해 검색 
+#     filter_backends = [SearchFilter]
+#     search_fields = ['title','content','pname']
+
+# #  조회 수정 삭제 포스트뷰셋이랑겹침 
+# class DetailPost(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
 
 # # 다중이미지 
 # class ImgOnlyViewSet(viewsets.ReadOnlyModelViewSet):

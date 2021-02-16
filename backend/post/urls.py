@@ -14,14 +14,12 @@ router.register('posts', views.PostViewSet) # 메인에 묶여있음
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('list/', views.ListPost.as_view()), # 글목록
-    path('list/<int:pk>/', views.DetailPost.as_view()), # 글내용
 
     path('comment/<int:comment_id>/', views.choices_view), # 댓글쓰기
-    path('comments/<int:pk>/', views.CommentDetail.as_view()), # 수정
     path('reply/<int:comment_id>/', views.choices_view), # 답글
+    path('comments/<int:pk>/', views.CommentDetail.as_view()), # 댓글수정
     
-    url(r'^comment/(?P<id>\d+)/recommand/$', views.Recommand.as_view(), name="postrecommand"),
+    url(r'^comment/(?P<id>\d+)/recommand/$', views.Recommand.as_view(), name="postrecommand"), # 추천 비추천
 
     # 카테고리
     path('category/', views.CategoryViewSet.as_view()),
@@ -29,6 +27,9 @@ urlpatterns = [
 
     path('brand/', views.BrandViewSet.as_view()),
     url(r'^brand/(?P<id>\d+)/$', views.BrandSearchViewSet.as_view()),
+    
+    # path('list/', views.ListPost.as_view()), # 글목록
+    # path('list/<int:pk>/', views.DetailPost.as_view()), # 글내용
     # path('list/recent/', views.RecentPostViewSet.as_view()), # 최신데이터 목록 
     #path('img/id/', views.PostImageDetail.as_view()),          
     # path('img', views.PostImageSerializer.as_view()),          # 다중이미지 테스트 url  

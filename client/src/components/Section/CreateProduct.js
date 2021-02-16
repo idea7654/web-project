@@ -1,25 +1,28 @@
-import React, { useState, useContext } from "react";
-import Dropdown from "./Dropdown";
-import DropdownBrand from "./DropdownBrand";
+import React, { useState, useContext, useReducer } from "react";
+//import Dropdown from "./Dropdown";
+//import DropdownBrand from "./DropdownBrand";
+import Dropdown from "../Common/Dropdown";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
+import ContentReducer from "../../reducer/ContentReducer";
+import FormContext from "../../context/FormContext";
 const CreateProduct = ({ history }) => {
-  const [Category, setCategory] = useState(null);
-  const [Content, setContent] = useState([]);
+  const Category = ["의자", "책상", "서랍", "소형수납", "주방 부속품"];
+  const Brand = ["기타", "한샘", "이케아", "일룸", "소프시스"];
+  const [Content, dispatch] = useReducer(ContentReducer, []);
   const [Preview, setPreview] = useState([]);
-  const [Brand, setBrand] = useState(null);
   const [User, setUser] = useContext(UserContext);
-  const [{ Title, Pname, Context }, onChange, reset] = useInputs({
-    Title: "",
-    Pname: "",
-    Context: "",
-  });
-
+  // const [DropValue, setDropValue] = useContext(FormContext);
+  const [state] = useContext(FormContext);
+  const [onChange] = useInputs();
   const imageChange = (e) => {
     e.preventDefault();
-    setContent(e.target.files);
+    dispatch({
+      type: "ADD_IMAGE",
+      value: e.target.files,
+    });
     let fileArr = e.target.files;
     let fileURLs = [];
     let file;
@@ -39,16 +42,18 @@ const CreateProduct = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Title === "") {
+    if (state.FormValue.Title === "") {
       alert("제목을 작성해주세요!");
-    } else if (Pname === "") {
+    } else if (state.FormValue.Pname === "") {
       alert("제품 이름을 작성해주세요!");
-    } else if (Category === null) {
+    } else if (state.DropValue.Category === null) {
       alert("카테고리를 골라주세요!");
-    } else if (Context === "") {
+    } else if (state.FormValue.Context === "") {
       alert("내용을 작성해주세요!");
     } else if (Preview.length === 0) {
       alert("이미지를 넣어주세요!");
+    } else if (state.DropValue.Brand === "") {
+      alert("브랜드를 골라주세요!");
     } else {
       let formData = await new FormData();
       for (const i in Content) {
@@ -56,10 +61,11 @@ const CreateProduct = ({ history }) => {
           await formData.append("image", Content[i]);
         }
       }
-      await formData.append("title", Title);
-      await formData.append("pname", Pname);
-      await formData.append("category", Category);
-      await formData.append("content", Context);
+      await formData.append("title", state.FormValue.Title);
+      await formData.append("pname", state.FormValue.Pname);
+      await formData.append("category", state.DropValue.Category);
+      await formData.append("content", state.FormValue.Context);
+      await formData.append("brand", state.DropValue.Brand);
       await axios
         .post("http://localhost:8000/api/posts/", formData, {
           headers: {
@@ -80,7 +86,7 @@ const CreateProduct = ({ history }) => {
           <div className="mb-3">제목</div>
           <input
             name="Title"
-            value={Title}
+            value={state.FormValue.Title}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
@@ -91,7 +97,7 @@ const CreateProduct = ({ history }) => {
           <div className="mb-3">제품 이름</div>
           <input
             name="Pname"
-            value={Pname}
+            value={state.FormValue.Pname}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
@@ -100,21 +106,23 @@ const CreateProduct = ({ history }) => {
         </div>
         <div>
           <div className="mb-3">카테고리</div>
-          <Dropdown
+          {/* <Dropdown
             Category={Category}
             setCategory={setCategory}
             color="white"
-          />
+          /> */}
+          <Dropdown init={Category} name="Category" />
         </div>
         <div>
           <div className="mb-3">브랜드</div>
-          <DropdownBrand Brand={Brand} setBrand={setBrand} color="white" />
+          {/* <DropdownBrand Brand={Brand} setBrand={setBrand} color="white" /> */}
+          <Dropdown init={Brand} name="Brand" />
         </div>
         <div>
           <div className="mb-3">제품 정보</div>
           <textarea
             name="Context"
-            value={Context}
+            value={state.FormValue.Context}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"

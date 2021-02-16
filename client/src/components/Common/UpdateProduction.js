@@ -1,27 +1,22 @@
 import React, { useState, useContext, useReducer } from "react";
+import Dropdown from "./Dropdown";
 import axios from "axios";
 import { UserContext } from "../../context/context";
 import { withRouter } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
 import ContentReducer from "../../reducer/ContentReducer";
 import FormContext from "../../context/FormContext";
-import Dropdown from "../Common/Dropdown";
-const Update = ({ info, setUpdateFlag, history }) => {
+const UpdateProduction = ({ setUpdateFlag, id, history }) => {
   const Category = ["의자", "책상", "서랍", "소형수납", "주방 부속품"];
   const Brand = ["기타", "한샘", "이케아", "일룸", "소프시스"];
   const [Content, dispatch] = useReducer(ContentReducer, []);
   const [Preview, setPreview] = useState([]);
-  const [DropValue] = useContext(FormContext);
   const [User, setUser] = useContext(UserContext);
-  const [{ Title, Pname, Context }, onChange, reset] = useInputs({
-    Title: info.title,
-    Pname: info.pname,
-    Context: info.content,
-  });
-
+  // const [DropValue, setDropValue] = useContext(FormContext);
+  const [state] = useContext(FormContext);
+  const [onChange, reset] = useInputs();
   const imageChange = (e) => {
     e.preventDefault();
-    //setContent(e.target.files);
     dispatch({
       type: "ADD_IMAGE",
       value: e.target.files,
@@ -45,28 +40,54 @@ const Update = ({ info, setUpdateFlag, history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = `token ${User.token}`;
-    let formData = await new FormData();
-    for (const i in Content) {
-      if (i < Content.length) {
-        await formData.append("img", Content[i]);
+    if (state.FormValue.Title === "") {
+      alert("제목을 작성해주세요!");
+    } else if (state.FormValue.Pname === "") {
+      alert("제품 이름을 작성해주세요!");
+    } else if (state.DropValue.Category === null) {
+      alert("카테고리를 골라주세요!");
+    } else if (state.FormValue.Context === "") {
+      alert("내용을 작성해주세요!");
+    } else if (Preview.length === 0) {
+      alert("이미지를 넣어주세요!");
+    } else if (state.DropValue.Brand === "") {
+      alert("브랜드를 골라주세요!");
+    } else {
+      let formData = await new FormData();
+      for (const i in Content) {
+        if (i < Content.length) {
+          await formData.append("image", Content[i]);
+        }
+      }
+      await formData.append("title", state.FormValue.Title);
+      await formData.append("pname", state.FormValue.Pname);
+      await formData.append("category", state.DropValue.Category);
+      await formData.append("content", state.FormValue.Context);
+      await formData.append("brand", state.DropValue.Brand);
+      if (!id) {
+        await axios
+          .post("http://localhost:8000/api/posts/", formData, {
+            headers: {
+              Authorization: `token ${User.token}`,
+            },
+          })
+          .then((res) => {
+            reset();
+            history.push("/");
+          });
+      } else {
+        await axios
+          .put(`http://localhost:8000/api/posts/${id}/`, formData, {
+            headers: {
+              Authorization: `token ${User.token}`,
+            },
+          })
+          .then((res) => {
+            reset();
+            setUpdateFlag(false);
+          });
       }
     }
-    await formData.append("title", Title);
-    await formData.append("pname", Pname);
-    await formData.append("category", DropValue.Category);
-    await formData.append("content", Context);
-    await formData.append("brand", DropValue.Brand);
-    await axios
-      .put(`http://localhost:8000/api/posts/${info.id}/`, formData, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        history.push("/");
-      });
   };
 
   return (
@@ -75,7 +96,8 @@ const Update = ({ info, setUpdateFlag, history }) => {
         <div>
           <div className="mb-3">제목</div>
           <input
-            value={Title}
+            name="Title"
+            value={state.FormValue.Title}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
@@ -85,7 +107,8 @@ const Update = ({ info, setUpdateFlag, history }) => {
         <div>
           <div className="mb-3">제품 이름</div>
           <input
-            value={Pname}
+            name="Pname"
+            value={state.FormValue.Pname}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
@@ -94,16 +117,23 @@ const Update = ({ info, setUpdateFlag, history }) => {
         </div>
         <div>
           <div className="mb-3">카테고리</div>
+          {/* <Dropdown
+              Category={Category}
+              setCategory={setCategory}
+              color="white"
+            /> */}
           <Dropdown init={Category} name="Category" />
         </div>
         <div>
           <div className="mb-3">브랜드</div>
+          {/* <DropdownBrand Brand={Brand} setBrand={setBrand} color="white" /> */}
           <Dropdown init={Brand} name="Brand" />
         </div>
         <div>
           <div className="mb-3">제품 정보</div>
           <textarea
-            value={Context}
+            name="Context"
+            value={state.FormValue.Context}
             onChange={onChange}
             className="border-solid border-4 border-light-blue-500 mb-6 w-full py-1"
             type="text"
@@ -122,21 +152,15 @@ const Update = ({ info, setUpdateFlag, history }) => {
           {Content
             ? Preview.map((data, index) => {
                 return (
-                  <div key={index}>
-                    <img src={data} alt="" />
+                  <div>
+                    <img key={index} className="mb-3" src={data} alt="" />
                   </div>
                 );
               })
             : ""}
         </div>
       </div>
-      <div className="flex justify-between">
-        <button
-          onClick={() => setUpdateFlag(false)}
-          className="bg-blue-700 text-white border border-blue-700 font-bold py-2 px-6 rounded-lg"
-        >
-          취소
-        </button>
+      <div className="flex justify-end">
         <button
           onClick={handleSubmit}
           className="bg-blue-700 text-white border border-blue-700 font-bold py-2 px-6 rounded-lg"
@@ -148,4 +172,4 @@ const Update = ({ info, setUpdateFlag, history }) => {
   );
 };
 
-export default withRouter(Update);
+export default withRouter(UpdateProduction);

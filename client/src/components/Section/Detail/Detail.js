@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
 import Ar from "./Ar";
-import Star from "./Star";
+import Star from "../../Common/Star";
 import axios from "axios";
 import DetailImage from "./DetailImage";
-import Update from "./Update";
-import { UserContext } from "../../context/context";
+//import Update from "./Update";
+import { UserContext } from "../../../context/context";
 import { withRouter } from "react-router-dom";
+import UpdateProduction from "../../Common/UpdateProduction";
+import FormContext from "../../../context/FormContext";
 const Detail = ({ match, history }) => {
   const [Info, setInfo] = useState({
     pname: "",
@@ -18,6 +20,7 @@ const Detail = ({ match, history }) => {
   const [Estar, setEstar] = useState([]);
   const [Fstar, setFstar] = useState([]);
   const [UpdateFlag, setUpdateFlag] = useState(false);
+  const [state, dispatches] = useContext(FormContext);
   const [User, setUser] = useContext(UserContext);
   useEffect(async () => {
     const res = await axios
@@ -64,8 +67,17 @@ const Detail = ({ match, history }) => {
     await setFstar(star);
     await setEstar(5 - star);
   }, []);
-  const handleUpdate = () => {
-    setUpdateFlag(true);
+  const handleUpdate = async () => {
+    await dispatches.FormDispatch({
+      type: "UPDATE_VALUE",
+      value: {
+        Title: Info.title,
+        Pname: Info.pname,
+        Context: Info.content,
+        Content: [],
+      },
+    });
+    await setUpdateFlag(true);
   };
 
   const handleDestroy = () => {
@@ -83,7 +95,8 @@ const Detail = ({ match, history }) => {
   return (
     <div>
       {UpdateFlag ? (
-        <Update info={Info} setUpdateFlag={setUpdateFlag} />
+        // <Update info={Info} setUpdateFlag={setUpdateFlag} />
+        <UpdateProduction setUpdateFlag={setUpdateFlag} id={Info.id} />
       ) : (
         <div>
           <div className="container px-5 py-5 mx-auto">

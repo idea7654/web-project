@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../../context/context";
+import { UserContext } from "../../../context/context";
 const GoodBad = ({ data }) => {
   const [Good, setGood] = useState(false);
   const [Bad, setBad] = useState(false);

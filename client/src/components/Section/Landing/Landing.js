@@ -3,7 +3,7 @@ import Search from "./Search";
 import CarouselComponent from "./CarouselComponent";
 import Product from "./Product";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "../../context/context";
+import { UserContext } from "../../../context/context";
 const Landing = ({ history }) => {
   const [User, setUser] = useContext(UserContext);
   const handleClick = () => {
