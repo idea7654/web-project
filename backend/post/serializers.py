@@ -98,6 +98,8 @@ class PostSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.content = validated_data.get('content', instance.content)
         instance.pname = validated_data.get('pname', instance.pname)
+        instance.category = validated_data.get('category', instance.category)
+        instance.brand = validated_data.get('brand', instance.brand)
 
         try:
             images_data = self.context.get('request').data.pop('img')
