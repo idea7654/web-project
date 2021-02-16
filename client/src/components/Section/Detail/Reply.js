@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
-import { UserContext } from "../../context/context";
+import { UserContext } from "../../../context/context";
 const Reply = ({ info, setShowModal, id }) => {
   const [Value, setValue] = useState("");
   const [User, setUser] = useContext(UserContext);

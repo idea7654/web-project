@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
 import Ar from "./Ar";
-import Star from "./Star";
+import Star from "../../Common/Star";
 import axios from "axios";
 import DetailImage from "./DetailImage";
 //import Update from "./Update";
-import { UserContext } from "../../context/context";
+import { UserContext } from "../../../context/context";
 import { withRouter } from "react-router-dom";
-import UpdateProduction from "../Common/UpdateProduction";
-import FormContext from "../../context/FormContext";
+import UpdateProduction from "../../Common/UpdateProduction";
+import FormContext from "../../../context/FormContext";
 const Detail = ({ match, history }) => {
   const [Info, setInfo] = useState({
     pname: "",

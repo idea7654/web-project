@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { UserContext } from "../../context/context";
-const Login = ({ history }) => {
+import { UserContext } from "../../../context/context";
+const Register = ({ history }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
   const [User, setUser] = useContext(UserContext);
@@ -14,26 +13,21 @@ const Login = ({ history }) => {
     setPassword(e.target.value);
   };
 
-  const registerRoute = () => {
-    history.push("/register");
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let body = {
       username: Id,
       password: Password,
     };
-
     axios
-      .post("http://localhost:8000/api/auth/login/", body)
+      .post("http://localhost:8000/api/auth/register/", body)
       .then((res) => {
+        //console.log(res);
         setUser(res.data);
-        console.log(res.data);
-        window.sessionStorage.setItem("token", res.data.token);
         history.push("/");
       })
       .catch((err) => {
-        alert("없는 유저입니다!");
+        alert("아이디 혹은 비밀번호의 조건이 맞지 않습니다.");
       });
   };
   return (
@@ -43,14 +37,14 @@ const Login = ({ history }) => {
           <form className="bg-white rounded px-12 pt-6 pb-8 mb-4">
             {/* <!-- @csrf --> */}
             <div className="text-gray-800 text-2xl flex justify-center border-b-2 py-2 mb-4">
-              Login
+              Register
             </div>
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-normal mb-2"
                 htmlFor="username"
               >
-                아이디
+                아이디(4자 이상)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -67,7 +61,7 @@ const Login = ({ history }) => {
                 className="block text-gray-700 text-sm font-normal mb-2"
                 htmlFor="password"
               >
-                Password
+                Password(6자 이상)
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -81,26 +75,20 @@ const Login = ({ history }) => {
                 onChange={changePassword}
               />
             </div>
+            <div className="flex items-center justify-end">
+              <button
+                className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                SignUp
+              </button>
+            </div>
           </form>
-          <div className="flex items-center justify-between">
-            <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              onClick={registerRoute}
-            >
-              SignUp
-            </a>
-            <button
-              className="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              SignIn
-            </button>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default withRouter(Login);
+export default Register;

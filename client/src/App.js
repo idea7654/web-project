@@ -1,30 +1,21 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
-import Landing from "./components/Section/Landing";
+import Landing from "./components/Section/Landing/Landing";
 import Footer from "./components/Footer/Footer";
-import Login from "./components/Section/Login";
-import Register from "./components/Section/Register";
+import Login from "./components/Section/Login/Login";
+import Register from "./components/Section/Login/Register";
 import { withRouter, Route } from "react-router-dom";
-import Detail from "./components/Section/Detail";
-import List from "./components/Section/List";
-import Category from "./components/Section/Category";
-import { UserContext, FormContext } from "./context/context";
+import Detail from "./components/Section/Detail/Detail";
+import List from "./components/Section/Landing/List";
+import Category from "./components/Section/Category/Category";
+import { UserContext } from "./context/context";
 import axios from "axios";
-import Help from "./components/Section/Help";
-// import CreateProduct from "./components/Section/CreateProduct";
-import Brand from "./components/Section/Brand";
+import Help from "./components/Section/Landing/Help";
+import Brand from "./components/Section/Brand/Brand";
 import { FormProvider } from "./context/FormContext";
 import UpdateProduction from "./components/Common/UpdateProduction";
 const App = () => {
   const [User, setUser] = useState("");
-  // const [DropValue, setDropValue] = useState({
-  //   Category: null,
-  //   Brand: null,
-  // });
-  // const [DropValue, dispatch] = useReducer(DropValueReducer, {
-  //   Category: null,
-  //   Brand: null,
-  // });
   useEffect(() => {
     const sessionToken = window.sessionStorage.getItem("token");
     if (sessionToken) {

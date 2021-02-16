@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
-import { UserContext } from "../../context/context";
+import { UserContext } from "../../../context/context";
 import Reply from "./Reply";
 const Comment = ({ info, setInfo }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
