@@ -18,11 +18,12 @@ class CommentSerializer(serializers.ModelSerializer):
     username = ReadOnlyField(source='comment_user.username')
     total = serializers.SerializerMethodField()
     
-
-
     class Meta:
         model = Comment
         fields = '__all__'
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
 
     def get_up(self, obj):
         return obj.upUser.count()
@@ -123,14 +124,6 @@ class PostSerializer(serializers.ModelSerializer):
     #     serializer = PostImageSerializer(parent_comments, many=True)
     #     return serializer.data
 
-# 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
-class CommentlistSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Comment.objects.create(**validated_data)
 
 # 카테고리
 class CategorySerializer(serializers.ModelSerializer):
@@ -143,6 +136,14 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = '__all__'
         
+# # 댓글쓰기에 묶여있음 위에꺼랑 합쳐도될거같은데 추후수정
+# class CommentlistSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Comment
+#         fields = '__all__'
+
+#     def create(self, validated_data):
+#         return Comment.objects.create(**validated_data)
 
 # # 다중이미지
 # class ImgOnlySerializer(serializers.ModelSerializer):
