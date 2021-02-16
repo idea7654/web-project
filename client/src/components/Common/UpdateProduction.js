@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
 import ContentReducer from "../../reducer/ContentReducer";
 import FormContext from "../../context/FormContext";
-const UpdateProduction = ({ setUpdateFlag, history }) => {
+const UpdateProduction = ({ setUpdateFlag, id, history }) => {
   const Category = ["의자", "책상", "서랍", "소형수납", "주방 부속품"];
   const Brand = ["기타", "한샘", "이케아", "일룸", "소프시스"];
   const [Content, dispatch] = useReducer(ContentReducer, []);
@@ -15,7 +15,6 @@ const UpdateProduction = ({ setUpdateFlag, history }) => {
   // const [DropValue, setDropValue] = useContext(FormContext);
   const [state] = useContext(FormContext);
   const [onChange, reset] = useInputs();
-  console.log(state);
   const imageChange = (e) => {
     e.preventDefault();
     dispatch({
@@ -65,20 +64,29 @@ const UpdateProduction = ({ setUpdateFlag, history }) => {
       await formData.append("category", state.DropValue.Category);
       await formData.append("content", state.FormValue.Context);
       await formData.append("brand", state.DropValue.Brand);
-      await axios
-        .post("http://localhost:8000/api/posts/", formData, {
-          headers: {
-            Authorization: `token ${User.token}`,
-          },
-        })
-        .then((res) => {
-          reset();
-          if (!setUpdateFlag) {
+      if (!id) {
+        await axios
+          .post("http://localhost:8000/api/posts/", formData, {
+            headers: {
+              Authorization: `token ${User.token}`,
+            },
+          })
+          .then((res) => {
+            reset();
             history.push("/");
-          } else {
+          });
+      } else {
+        await axios
+          .put(`http://localhost:8000/api/posts/${id}/`, formData, {
+            headers: {
+              Authorization: `token ${User.token}`,
+            },
+          })
+          .then((res) => {
+            reset();
             setUpdateFlag(false);
-          }
-        });
+          });
+      }
     }
   };
 

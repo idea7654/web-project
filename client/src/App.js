@@ -11,9 +11,10 @@ import Category from "./components/Section/Category";
 import { UserContext, FormContext } from "./context/context";
 import axios from "axios";
 import Help from "./components/Section/Help";
-import CreateProduct from "./components/Section/CreateProduct";
+// import CreateProduct from "./components/Section/CreateProduct";
 import Brand from "./components/Section/Brand";
 import { FormProvider } from "./context/FormContext";
+import UpdateProduction from "./components/Common/UpdateProduction";
 const App = () => {
   const [User, setUser] = useState("");
   // const [DropValue, setDropValue] = useState({
@@ -60,7 +61,10 @@ const App = () => {
             render={({ match }) => <Category match={match} />}
           />
           <Route path="/help" render={() => <Help />} />
-          <Route path="/create" render={() => <CreateProduct />} />
+          <Route
+            path="/create"
+            render={() => <UpdateProduction setUpdateFlag={null} id={null} />}
+          />
           <Route path="/brand" render={(match) => <Brand match={match} />} />
           <Footer />
         </FormProvider>

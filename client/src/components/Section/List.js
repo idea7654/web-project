@@ -12,7 +12,7 @@ const List = ({ history, location }) => {
 
   useEffect(async () => {
     await axios
-      .get(`http://localhost:8000/api/posts?search=${searchQuery}`)
+      .get(`http://localhost:8000/api/list?search=${searchQuery}`)
       .then((res) => {
         setProList(res.data);
         if (res.data.length !== 0) {

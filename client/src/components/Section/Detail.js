@@ -96,7 +96,7 @@ const Detail = ({ match, history }) => {
     <div>
       {UpdateFlag ? (
         // <Update info={Info} setUpdateFlag={setUpdateFlag} />
-        <UpdateProduction setUpdateFlag={setUpdateFlag} />
+        <UpdateProduction setUpdateFlag={setUpdateFlag} id={Info.id} />
       ) : (
         <div>
           <div className="container px-5 py-5 mx-auto">
