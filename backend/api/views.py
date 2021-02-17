@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
-    LoginUserSerializer,
+    LoginUserSerializer, UsernameUniqueCheckSerializer,
 )
 from knox.models import AuthToken
 from django.contrib.auth.models import User
@@ -58,3 +58,14 @@ class UserAPI(generics.RetrieveAPIView):
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class UsernameUniqueCheck(generics.CreateAPIView): 
+    serializer_class = UsernameUniqueCheckSerializer
+    def post(self, request, format=None): 
+        serializer = self.get_serializer(data=request.data, context={'request': request}) 
+        if serializer.is_valid(): 
+            return Response(data={'detail':['You can use this ID']}, status=status.HTTP_200_OK) 
+        else: 
+            detail = dict() 
+            detail['detail'] = serializer.errors['username'] 
+        return Response(data=detail, status=status.HTTP_400_BAD_REQUEST)
