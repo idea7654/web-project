@@ -5,7 +5,7 @@ import Star from "../../Common/Star";
 import axios from "axios";
 import DetailImage from "./DetailImage";
 //import Update from "./Update";
-import { UserContext } from "../../../context/context";
+import UserContext from "../../../context/UserContext";
 import { withRouter } from "react-router-dom";
 import UpdateProduction from "../../Common/UpdateProduction";
 import FormContext from "../../../context/FormContext";
@@ -21,7 +21,9 @@ const Detail = ({ match, history }) => {
   const [Fstar, setFstar] = useState([]);
   const [UpdateFlag, setUpdateFlag] = useState(false);
   const [state, dispatches] = useContext(FormContext);
-  const [User, setUser] = useContext(UserContext);
+  //const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
+  console.log(User);
   useEffect(async () => {
     const res = await axios
       .get(`http://localhost:8000/api/posts/${match.params.id}`)
@@ -121,7 +123,7 @@ const Detail = ({ match, history }) => {
             </div>
           </div>
           <Comment info={Info} setInfo={setInfo} />
-          {User ? (
+          {User.user !== "" ? (
             User.user.id === Info.owner ? (
               <div className="flex justify-end mb-3">
                 <a

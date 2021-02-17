@@ -1,17 +1,18 @@
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "../../context/context";
+import UserContext from "../../context/UserContext";
 import axios from "axios";
 const Navbar = ({ history }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [User, setUser] = useContext(UserContext);
+  // const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   const mainRoute = () => {
     history.push("/");
     setNavbarOpen(false);
   };
 
   const loginRoute = () => {
-    if (!User.user) {
+    if (User.token === "") {
       history.push("/login");
       setNavbarOpen(false);
     }
@@ -36,7 +37,8 @@ const Navbar = ({ history }) => {
         },
       })
       .then((res) => {
-        setUser("");
+        console.log(res.data);
+        //setUser("");
       });
   };
 
@@ -110,7 +112,7 @@ const Navbar = ({ history }) => {
                   <span className="ml-2">Help</span>
                 </a>
               </li>
-              {User ? (
+              {User.token !== "" ? (
                 <li className="nav-item">
                   <a
                     className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"

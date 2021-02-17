@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../../../context/context";
+import UserContext from "../../../context/UserContext";
 const GoodBad = ({ data }) => {
   const [Good, setGood] = useState(false);
   const [Bad, setBad] = useState(false);
-  const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   const [Total, setTotal] = useState(0);
   const handleGood = async () => {
     if (!Bad) {

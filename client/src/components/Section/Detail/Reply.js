@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
-import { UserContext } from "../../../context/context";
+import UserContext from "../../../context/UserContext";
 const Reply = ({ info, setShowModal, id }) => {
   const [Value, setValue] = useState("");
-  const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   const [ReplyData, setReplyData] = useState([]);
   const handlePost = () => {
-    //axios.post();
-    if (User) {
+    if (User.user !== "") {
       let body = {
         comment_user: User.user.id,
         comment_text: Value,
@@ -44,7 +43,6 @@ const Reply = ({ info, setShowModal, id }) => {
 
   useEffect(() => {
     setReplyData(info.reply);
-    console.log(info);
   }, [info]);
   return (
     <div>

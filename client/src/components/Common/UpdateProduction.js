@@ -1,7 +1,7 @@
 import React, { useState, useContext, useReducer } from "react";
 import Dropdown from "./Dropdown";
 import axios from "axios";
-import { UserContext } from "../../context/context";
+import UserContext from "../../context/UserContext";
 import { withRouter } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
 import ContentReducer from "../../reducer/ContentReducer";
@@ -11,7 +11,7 @@ const UpdateProduction = ({ setUpdateFlag, id, history }) => {
   const Brand = ["기타", "한샘", "이케아", "일룸", "소프시스"];
   const [Content, dispatch] = useReducer(ContentReducer, []);
   const [Preview, setPreview] = useState([]);
-  const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   // const [DropValue, setDropValue] = useContext(FormContext);
   const [state] = useContext(FormContext);
   const [onChange, reset] = useInputs();

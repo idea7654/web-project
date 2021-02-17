@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../../../context/context";
+import UserContext from "../../../context/UserContext";
 const Register = ({ history }) => {
   const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
-  const [User, setUser] = useContext(UserContext);
+  //const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   const changeId = (e) => {
     setId(e.target.value);
   };
@@ -22,8 +23,11 @@ const Register = ({ history }) => {
     axios
       .post("http://localhost:8000/api/auth/register/", body)
       .then((res) => {
-        //console.log(res);
-        setUser(res.data);
+        Dispatch({
+          type: "SET_USER",
+          user: res.data.user,
+          token: res.data.token,
+        });
         history.push("/");
       })
       .catch((err) => {

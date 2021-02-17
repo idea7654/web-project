@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import GoodBad from "./GoodBad";
 import axios from "axios";
-import { UserContext } from "../../../context/context";
+import UserContext from "../../../context/UserContext";
 import Reply from "./Reply";
 const Comment = ({ info, setInfo }) => {
   const [Star, setStar] = useState(["none", "none", "none", "none", "none"]);
   const [Review, setReview] = useState(0);
   const [Comment, setComment] = useState("");
-  const [User, setUser] = useContext(UserContext);
+  const [User, Dispatch] = useContext(UserContext);
   const [Page, setPage] = useState(1);
   const [ReplyData, setReplyData] = useState(null);
   const [ShowModal, setShowModal] = useState(false);
@@ -30,7 +30,7 @@ const Comment = ({ info, setInfo }) => {
     setComment(e.target.value);
   };
   const handlePost = () => {
-    if (User.user) {
+    if (User.user !== "") {
       let body = {
         comment_user: User.user.id,
         comment_text: Comment,
