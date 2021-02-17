@@ -14,6 +14,7 @@ import Brand from "./components/Section/Brand/Brand";
 import { FormProvider } from "./context/FormContext";
 import UserContext from "./context/UserContext";
 import UpdateProduction from "./components/Common/UpdateProduction";
+import { RecommendProvider } from "./context/RecommendContext";
 const App = () => {
   const [User, Dispatch] = useContext(UserContext);
   useEffect(() => {
@@ -28,41 +29,43 @@ const App = () => {
         })
         .then((res) => {
           //setUser({ token: sessionToken, user: res.data });
-          console.log(res.data);
-          // Dispatch({
-          //   type: "SET_USER",
-          //   token: sessionToken,
-          //   user: res.data,
-          // });
+          // console.log(res.data);
+          Dispatch({
+            type: "SET_USER",
+            token: sessionToken,
+            user: res.data,
+          });
         });
     }
   }, []);
   return (
     <div>
       <FormProvider>
-        <Navbar />
-        <Route path="/" render={() => <Landing />} exact />
-        <Route path="/login" render={() => <Login />} />
-        <Route path="/register" render={() => <Register />} />
-        <Route
-          path="/detail/:id"
-          render={({ match }) => <Detail match={match} />}
-        />
-        <Route
-          path="/list"
-          render={(location) => <List location={location} />}
-        />
-        <Route
-          path="/category"
-          render={({ match }) => <Category match={match} />}
-        />
-        <Route path="/help" render={() => <Help />} />
-        <Route
-          path="/create"
-          render={() => <UpdateProduction setUpdateFlag={null} id={null} />}
-        />
-        <Route path="/brand" render={(match) => <Brand match={match} />} />
-        <Footer />
+        <RecommendProvider>
+          <Navbar />
+          <Route path="/" render={() => <Landing />} exact />
+          <Route path="/login" render={() => <Login />} />
+          <Route path="/register" render={() => <Register />} />
+          <Route
+            path="/detail/:id"
+            render={({ match }) => <Detail match={match} />}
+          />
+          <Route
+            path="/list"
+            render={(location) => <List location={location} />}
+          />
+          <Route
+            path="/category"
+            render={({ match }) => <Category match={match} />}
+          />
+          <Route path="/help" render={() => <Help />} />
+          <Route
+            path="/create"
+            render={() => <UpdateProduction setUpdateFlag={null} id={null} />}
+          />
+          <Route path="/brand" render={(match) => <Brand match={match} />} />
+          <Footer />
+        </RecommendProvider>
       </FormProvider>
     </div>
   );

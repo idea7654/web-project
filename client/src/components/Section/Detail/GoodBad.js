@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import UserContext from "../../../context/UserContext";
+import RecommendContext from "../../../context/RecommendContext";
 const GoodBad = ({ data }) => {
-  const [Good, setGood] = useState(false);
-  const [Bad, setBad] = useState(false);
+  //const [Good, setGood] = useState(false);
+  //const [Bad, setBad] = useState(false);
   const [User, Dispatch] = useContext(UserContext);
   const [Total, setTotal] = useState(0);
+  const [Recommend, RecommendDispatch] = useContext(RecommendContext);
   const handleGood = async () => {
-    if (!Bad) {
+    if (!Recommend.Bad) {
       let formData = await new FormData();
       await formData.append("recommand", "up");
       const token = await `token ${User.token}`;
@@ -24,10 +26,20 @@ const GoodBad = ({ data }) => {
         .then((res) => {
           if (res.data === 1) {
             setTotal(Total + 1);
-            setGood(true);
+            //setGood(true);
+            RecommendDispatch({
+              type: "SET_GOOD",
+              value: true,
+              id: data.id,
+            });
           } else {
             setTotal(Total - 1);
-            setGood(false);
+            //setGood(false);
+            RecommendDispatch({
+              type: "SET_GOOD_CANCEL",
+              value: false,
+              id: data.id,
+            });
           }
         })
         .catch((err) => {
@@ -39,7 +51,7 @@ const GoodBad = ({ data }) => {
   };
 
   const handleBad = async () => {
-    if (!Good) {
+    if (!Recommend.Good) {
       let formData = await new FormData();
       await formData.append("recommand", "down");
       const token = await `token ${User.token}`;
@@ -56,10 +68,20 @@ const GoodBad = ({ data }) => {
         .then((res) => {
           if (res.data === -1) {
             setTotal(Total - 1);
-            setBad(true);
+            //setBad(true);
+            RecommendDispatch({
+              type: "SET_BAD",
+              value: true,
+              id: data.id,
+            });
           } else {
             setTotal(Total + 1);
-            setBad(false);
+            //setBad(false);
+            RecommendDispatch({
+              type: "SET_BAD_CANCEL",
+              value: false,
+              id: data.id,
+            });
           }
         })
         .catch((err) => {
@@ -77,7 +99,7 @@ const GoodBad = ({ data }) => {
   }, []);
   return (
     <div className="flex flex-row mt-2">
-      {Good ? (
+      {Recommend.Good && Recommend.Id.indexOf(data.id) !== -1 ? (
         <img
           onClick={handleGood}
           className="w-6 h-6 mr-2"
