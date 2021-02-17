@@ -69,6 +69,10 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+    permission_classes = [
+        IsAuthorOrReadonly,
+    ]
+
 
 class Recommand(APIView):
     def post(self, request, id, format=None):

@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import path
 
-from .views import LoginAPI, RegistrationAPI, UserAPI, UserList
+from .views import LoginAPI, RegistrationAPI, UserAPI, UserList, UsernameUniqueCheck
 
 urlpatterns = [
 
@@ -24,5 +24,6 @@ urlpatterns = [
     path('auth/register/', RegistrationAPI.as_view()), 
     path('auth/user/', UserAPI.as_view()),
     path('auth/user/list', UserList.as_view()),
+    path('uniquecheck/username', UsernameUniqueCheck.as_view()),
 
 ]
