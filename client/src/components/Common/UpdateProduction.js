@@ -56,7 +56,11 @@ const UpdateProduction = ({ setUpdateFlag, id, history }) => {
       let formData = await new FormData();
       for (const i in Content) {
         if (i < Content.length) {
-          await formData.append("image", Content[i]);
+          if (!id) {
+            await formData.append("image", Content[i]);
+          } else {
+            await formData.append("img", Content[i]);
+          }
         }
       }
       await formData.append("title", state.FormValue.Title);
