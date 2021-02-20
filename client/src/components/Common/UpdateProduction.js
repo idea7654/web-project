@@ -48,7 +48,7 @@ const UpdateProduction = ({ setUpdateFlag, id, history }) => {
       alert("카테고리를 골라주세요!");
     } else if (state.FormValue.Context === "") {
       alert("내용을 작성해주세요!");
-    } else if (Preview.length === 0) {
+    } else if (Preview.length === 0 && !id) {
       alert("이미지를 넣어주세요!");
     } else if (state.DropValue.Brand === "") {
       alert("브랜드를 골라주세요!");
